@@ -28,8 +28,8 @@ export class models implements datastore {
     }
 
 
-    getAllStudent(): Promise<void> {
-        throw new Error("Method not implemented.");
+    getAllStudent(): Promise<student[] | undefined> {
+        return this.db.get(`SELECT * FROM students`  ); 
     }
     getStudent(id: string): Promise<student> {
         throw new Error("Method not implemented.");
