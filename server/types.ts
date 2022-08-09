@@ -1,26 +1,26 @@
-
-
-
-import { RequestHandler } from "express"
+import { RequestHandler } from 'express';
 
 export interface student {
-    id : string , 
-    name : string , 
-    phone : string , 
-    parentPhone : string 
-    grade : string  ,
-    group : String  , 
-    type : string 
+  id: string;
+  name: string;
+  phone: string;
+  parentPhone: string;
+  grade: string;
+  group: String;
+  type: string;
 }
-
 
 /* Type checking */
 
-export type  typeValidation<req , res>  = RequestHandler<
-any,
-Partial<message<res>> , 
-Partial<req> , 
-any
-> 
+export type typeValidation<req, res> = RequestHandler<
+  any,
+  Partial<message<res>>,
+  Partial<req>,
+  any
+>;
+export type studentType = Pick<
+  student,
+  'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'
+>;
 
-export type message<T> = T & {message : string }
+export type message<T> = T & { message: string };
