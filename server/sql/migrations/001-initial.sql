@@ -6,5 +6,5 @@ CREATE TABLE students (
     parentPhone VARCHAR NOT NULL , 
     grade       VARCHAR NOT NULL , 
     group_      VARCHAR NOT NULL ,
-    type        VARCHAR NOT NULL ,  
+    type        VARCHAR NOT NULL  
 ) ; 
