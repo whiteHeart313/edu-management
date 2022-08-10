@@ -81,21 +81,32 @@ export const changeGroup: typeValidation<{ id: string; switchedGroup: string }, 
 };
 
 
-export const attendStudent : typeValidation<{studentId : string} , {}> = async (req , res )=> {
+export const attendStudent : typeValidation<{studentsIds : {id: string}[]} , {}> = async (req , res )=> {
 
-  const studentId = req.body.studentId ; 
-  if (await studentNotExist(studentId!)) {
-    return res.status(400).send({ message: 'Student is not existing in the system !' });
+  const studentsIds = req.body.studentsIds! ; 
+  for(let i  = 0 ; i < studentsIds.length ; i++) {
+
+    const student = studentsIds[i] ;
+    console.log("this is the student ",student)
+    
+    if (await studentNotExist(student.id)) {
+        res.status(400).send({ message: 'Student is not existing in the system !' });
+      }
+      if(await studentHasBeenAttended(student.id)) {
+      
+        res.status(400).send({ message: 'Student already attended !' });
+      
+      }
+      await db.attendStudent(crypto.randomUUID() , student.id)
+      
+
+
   }
-  if(await studentHasBeenAttended(studentId!)) {
-
-    return res.status(400).send({ message: 'Student already attended !' });
-
-  }
-  await db.attendStudent(crypto.randomUUID() , studentId!)
   return res
-    .status(200)
-    .send({ message: `student has been attended successfully  ` });
+      .status(200)
+      .send({ message: `student has been attended successfully ` });
+
+
 }
 
 async function studentNotExist(id: string) {

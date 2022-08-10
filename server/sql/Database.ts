@@ -64,7 +64,7 @@ export class models implements datastore {
     await this.db
       .run('INSERT INTO attendence (id, st_id , date ) VALUES (?,?,?)', randomId, studentId, today)
       .then(e => {
-        console.log('student has been attended today');
+        console.log('added to DB');
       });
   }
 
@@ -101,7 +101,7 @@ export class models implements datastore {
         exams.examResult
       )
       .then(e => {
-        console.log('student has been attended today');
+        console.log('added to DB');
       });
   }
   createMonthlyExam(): Promise<void> {

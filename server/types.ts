@@ -44,4 +44,13 @@ export type examType = Pick<
   'st_id' | 'examResult' 
 >;
 
+
+export type JSONValue =
+    | string
+    | number
+    | boolean
+    | { [x: string]: JSONValue }
+    | Array<JSONValue>;
+
+
 export type message<T> = T & { message: string };
