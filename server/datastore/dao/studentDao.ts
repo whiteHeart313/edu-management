@@ -1,4 +1,4 @@
-import { student } from '../../types';
+import { student , attendence} from '../../types';
 
 export interface StudentDao {
   getAllStudent(): Promise<student[] | undefined>;
@@ -7,4 +7,6 @@ export interface StudentDao {
   getStudentById(id: string): Promise<student | undefined>;
   getStudentbyPhone(phone: string): Promise<student | undefined>;
   changeGroup(id: string, switchedGroup: string): Promise<void>;
+  attendStudent(randomId : string ,studentId: string): Promise<void> 
+  getStudentAttendenceToday(studentId : string ): Promise<attendence | undefined> 
 }

@@ -1,6 +1,6 @@
 import { datastore } from '../datastore';
 
-import { student } from '../types';
+import { student, attendence, Exam } from '../types';
 import { Database, open as sqliteOpen } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import path from 'path';
@@ -22,6 +22,7 @@ export class models implements datastore {
     return this;
   }
 
+  // Students Queries
   getAllStudent(): Promise<student[] | undefined> {
     return this.db.all(`SELECT * FROM students `);
   }
@@ -55,5 +56,70 @@ export class models implements datastore {
   }
   async changeGroup(id: string, switchedGroup: string): Promise<void> {
     await this.db.run('UPDATE students SET group_ = ? WHERE id = ?', switchedGroup, id);
+  }
+
+  async attendStudent(randomId: string, studentId: string): Promise<void> {
+    const today = await this.getDate();
+
+    await this.db
+      .run('INSERT INTO attendence (id, st_id , date ) VALUES (?,?,?)', randomId, studentId, today)
+      .then(e => {
+        console.log('student has been attended today');
+      });
+  }
+
+  async getStudentAttendenceToday(studentId: string): Promise<attendence | undefined> {
+    const today = await this.getDate();
+    console.log(today);
+    return this.db.get<attendence>(
+      `SELECT * FROM attendence WHERE st_id = ? AND date = ?`,
+      studentId,
+      today
+    );
+  }
+
+  async getDate(): Promise<string> {
+    let ts = Date.now();
+
+    let date_ob = new Date(ts);
+    let date = date_ob.getDate();
+    let month = date_ob.getMonth() + 1;
+    let year = date_ob.getFullYear();
+    console.log(year + '-' + month + '-' + date);
+    return year + '-' + month + '-' + date;
+  }
+
+  // Exams Queries
+
+  async createDailyExam(exams: Exam): Promise<void> {
+    await this.db
+      .run(
+        'INSERT INTO dailyExams (id, st_id , date , examResult ) VALUES (?,?,?)',
+        exams.id,
+        exams.st_id,
+        exams.date,
+        exams.examResult
+      )
+      .then(e => {
+        console.log('student has been attended today');
+      });
+  }
+  createMonthlyExam(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  getExamByMonth(): Promise<Exam[]> {
+    throw new Error('Method not implemented.');
+  }
+  getAllDailyExams(): Promise<Exam[]> {
+    throw new Error('Method not implemented.');
+  }
+  getAllMonthlyExams(): Promise<Exam[]> {
+    throw new Error('Method not implemented.');
+  }
+  getStudentDailyExams(): Promise<Exam[]> {
+    throw new Error('Method not implemented.');
+  }
+  getStudentMonthlyExams(): Promise<Exam[]> {
+    throw new Error('Method not implemented.');
   }
 }

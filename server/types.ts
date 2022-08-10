@@ -10,6 +10,22 @@ export interface student {
   type: string;
 }
 
+
+export interface attendence {
+  id  : string , 
+  st_id : string , 
+  date : string  
+} 
+export interface Exam {
+
+  id  : string , 
+  st_id : string , 
+  date : string  , 
+  examResult : Number
+
+}
+
+
 /* Type checking */
 
 export type typeValidation<req, res> = RequestHandler<

@@ -1,7 +1,7 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import { initDB } from './datastore';
-import { getStudents, addStudents, deleteStudent, changeGroup } from './Handler/StudentHandler';
+import { getStudents, addStudents, deleteStudent, changeGroup , attendStudent} from './Handler/StudentHandler';
 import { errHandler } from './Middleware/errorMidlware';
 (async () => {
   await initDB();
@@ -23,7 +23,8 @@ import { errHandler } from './Middleware/errorMidlware';
   app.post('/v1/addStudent', asyncHandler(addStudents));
   app.post('/v1/deleteStudent', asyncHandler(deleteStudent));
   app.post('/v1/changeGroup', asyncHandler(changeGroup));
-
+  app.post('/v1/atttendStudent' , asyncHandler(attendStudent))
+  
   app.use(errHandler);
   app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
