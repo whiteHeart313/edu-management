@@ -39,4 +39,9 @@ export type studentType = Pick<
   'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'
 >;
 
+export type examType = Pick<
+  Exam,
+  'st_id' | 'examResult' 
+>;
+
 export type message<T> = T & { message: string };
