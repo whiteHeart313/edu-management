@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+frontend/node_modules/a.json
+node_modules
+frontend/node_modules
+frontend/node_modules/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+frontend\node_modules
+frontend\node_modules\
+=======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -6,6 +18,7 @@
 .pnp.js
 frontend\node_modules\
 frontend\node_modules
+>>>>>>> b5d5dd8386a2a07898782d5436f1911871efb4f0
 
 # testing
 /coverage
@@ -23,3 +36,7 @@ frontend\node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
+
+=======
+>>>>>>> b5d5dd8386a2a07898782d5436f1911871efb4f0
