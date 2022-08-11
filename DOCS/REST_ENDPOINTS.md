@@ -13,8 +13,10 @@
 
 # change student group 
 
-**http://localhost:8080/v1changeGroup**
+**http://localhost:8080/v1/changeGroup**
 
-# get student details 
+# attend student 
+
+**http://localhost:8080/v1/atttendStudent**
 
 

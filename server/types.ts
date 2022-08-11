@@ -10,6 +10,18 @@ export interface student {
   type: string;
 }
 
+export interface attendence {
+  id: string;
+  st_id: string;
+  date: string;
+}
+export interface Exam {
+  id: string;
+  st_id: string;
+  date: string;
+  examResult: Number;
+}
+
 /* Type checking */
 
 export type typeValidation<req, res> = RequestHandler<
@@ -22,5 +34,9 @@ export type studentType = Pick<
   student,
   'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'
 >;
+
+export type exam  = {st_id : string  , examResult : Number  , dialyExam : Boolean , date : string }
+
+export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 
 export type message<T> = T & { message: string };
