@@ -70,7 +70,6 @@ export class models implements datastore {
 
   async getStudentAttendenceToday(studentId: string): Promise<attendence | undefined> {
     const today = await this.getDate();
-    console.log(today);
     return this.db.get<attendence>(
       `SELECT * FROM attendence WHERE st_id = ? AND date = ?`,
       studentId,
@@ -94,7 +93,7 @@ export class models implements datastore {
   async createDailyExam(exams: Exam): Promise<void> {
     await this.db
       .run(
-        'INSERT INTO dailyExams (id, st_id , date , examResult ) VALUES (?,?,?)',
+        'INSERT INTO dailyExams (id, st_id , date , examResult ) VALUES (?,?,?,?)',
         exams.id,
         exams.st_id,
         exams.date,
@@ -104,11 +103,29 @@ export class models implements datastore {
         console.log('added to DB');
       });
   }
-  createMonthlyExam(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async createMonthlyExam(exams: Exam): Promise<void> {
+    await this.db
+      .run(
+        'INSERT INTO monthlyExams (id, st_id , date , examResult ) VALUES (?,?,?,?)',
+        exams.id,
+        exams.st_id,
+        exams.date,
+        exams.examResult
+      )
+      .then(e => {
+        console.log('added to DB');
+      });
   }
-  getExamByMonth(): Promise<Exam[]> {
-    throw new Error('Method not implemented.');
+  getExamByMonth(month: string): Promise<Exam[] | undefined> {
+    return this.db.get(
+      `SELECT  monthlyExams.examResult , students.name , students.grade
+      FROM monthlyExams 
+      INNER JOIN students 
+      ON monthlyExams.st_id = students.id
+      WHERE monthlyExams.date  = ?
+     `,
+      month
+    );
   }
   getAllDailyExams(): Promise<Exam[]> {
     throw new Error('Method not implemented.');

@@ -1,12 +1,6 @@
-
-
 import { db } from '../datastore';
 import { student, typeValidation, studentType } from '../types';
 import crypto from 'crypto';
-
-
-
-
 
 export const getStudents: typeValidation<{}, { students: student[] }> = async (req, res) => {
   return res.status(200).send({ students: await db.getAllStudent() });
@@ -80,45 +74,43 @@ export const changeGroup: typeValidation<{ id: string; switchedGroup: string }, 
     .send({ message: `student  has been moved to ${req.body.switchedGroup}  successfully  ` });
 };
 
+export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}> = async (
+  req,
+  res
+) => {
+  const studentsIds = req.body.studentsIds!;
+  let numberOfInvalidStudents = 0 ; 
+  for (let i = 0; i < studentsIds.length; i++) {
+    const student = studentsIds[i];
+    console.log('this is the student ', student);
 
-export const attendStudent : typeValidation<{studentsIds : {id: string}[]} , {}> = async (req , res )=> {
-
-  const studentsIds = req.body.studentsIds! ; 
-  for(let i  = 0 ; i < studentsIds.length ; i++) {
-
-    const student = studentsIds[i] ;
-    console.log("this is the student ",student)
-    
     if (await studentNotExist(student.id)) {
-        res.status(400).send({ message: 'Student is not existing in the system !' });
-      }
-      if(await studentHasBeenAttended(student.id)) {
-      
-        res.status(400).send({ message: 'Student already attended !' });
-      
-      }
-      await db.attendStudent(crypto.randomUUID() , student.id)
-      
-
-
+      res.status(400).send({ message: `Student :  ${student} is not existing in the system !` });
+      numberOfInvalidStudents++ ; 
+      continue ; 
+    }
+    else if (await studentHasBeenAttended(student.id)) {
+      res.status(400).send({ message: `Student : ${student} already attended !` });
+      numberOfInvalidStudents++ ; 
+      continue ; 
+    }
+    
+    await db.attendStudent(crypto.randomUUID(), student.id);
+    
   }
-  return res
-      .status(200)
-      .send({ message: `student has been attended successfully ` });
-
-
-}
+  if(numberOfInvalidStudents == studentsIds.length) 
+      return res.status(400).send({message : "no one of your students has been attended for various problems "})
+  return res.status(200).send({ message: `student has been attended successfully ` });
+};
 
 async function studentNotExist(id: string) {
   if (!(await db.getStudentById(id))) return true;
   return false;
 }
 
-async function studentHasBeenAttended(id : string ) {
-
-  if(await db.getStudentAttendenceToday(id)) {
-    return true  ;
+async function studentHasBeenAttended(id: string) {
+  if (await db.getStudentAttendenceToday(id)) {
+    return true;
   }
-  return false ; 
-
+  return false;
 }
