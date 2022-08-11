@@ -1,5 +1,4 @@
 
-
 # get all students 
 
 **http://localhost:8080/v1/getStudents**

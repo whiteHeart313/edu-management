@@ -4,28 +4,31 @@ import { Box } from "@mui/system";
 import StudDay from "./components/StudDay";
 import AddStue from "./components/AddStu";
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [Products, setProducts] = useState([]);
+  const [students, setStudents] = useState([]);
 
   // get all products from the backend
   useEffect(() => {
     fetch("http://localhost:8080/v1/getStudents")
       .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .then(console.log(Products));
+      .then((data) => setStudents(data))
   }, []);
 
   return (
     <div className="App">
+      {console.log(students)}
       <SideNav />
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
         <div style={{ marginLeft: "210px", marginTop: "50px" }}>
-          <StudDay />
-          {/* <AddStue/> */}
+          <Routes>
+            <Route path="/" element={<StudDay />} />
+            <Route path="/add" element={<AddStue />} />
+          </Routes>
         </div>
       </Box>
     </div>

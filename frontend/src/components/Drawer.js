@@ -11,12 +11,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { Link } from "react-router-dom";
 
 
 const drawerWidth = 200;
 
 export default function PermanentDrawerLeft() {
   return (
+
+    
     <Box sx={{ display: 'flex' }}>
      
       <AppBar
@@ -45,19 +48,19 @@ export default function PermanentDrawerLeft() {
         
         <List>
           {['الغياب', 'اليوم ', 'الفلوس ', 'هري'].map((text, index) => (
-            <>
+           <Link to="/">
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                 </ListItemIcon>
-                <ListItemText primary={text} />
+               <ListItemText primary={text} /> 
               </ListItemButton>
               
             </ListItem>
             <Divider />
             <Divider />
             <Divider />
-            </>
+            </Link>
           ))}
         </List>
        
