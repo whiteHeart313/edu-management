@@ -33,9 +33,26 @@ const types = [
   },
 ];
 
+const groups = [
+  {
+    value: "السبت و الثلاثاء",
+    label: "السبت و الثلاثاء",
+  },
+  {
+    value: "الأحد و الأربعاء",
+    label: "الأحد و الأربعاء",
+  },
+  {
+    value: "الأثنين و الخميس",
+    label: "الأثنين و الخميس",
+  },
+];
+
+
 export default function OutlinedCard() {
   const [grade, setGrade] = React.useState("اول ثانوي");
   const [type, setType] = React.useState("عام");
+  const [group,setGroup] = React.useState("سبت و ثلاثاء")
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [parentPhone, setParentPhone] = React.useState("");
@@ -48,12 +65,17 @@ export default function OutlinedCard() {
         phone,
         parentPhone,
         grade, //  اولي ثانوي ...
-        group: "ddw", // سبت حد اربع
+        group, // سبت حد اربع
         type, // لغات عام
       })
       .then((res) => {
         console.log(res);
         setPhone("");
+        setParentPhone("");
+        setName("");
+        setGrade("")
+        setGroup("")
+        setType("")
       });
   };
   return (
@@ -113,6 +135,20 @@ export default function OutlinedCard() {
                   helperText="Please select the grade"
                 >
                   {types.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  id="outlined-select-group"
+                  select
+                  label="group"
+                  value={group}
+                  onChange={(e) => setGroup(e.target.value)}
+                  helperText="Please select the grade"
+                >
+                  {groups.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
