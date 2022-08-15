@@ -96,6 +96,7 @@ export default function OutlinedCard() {
                   required
                   id="outlined-required"
                   label="Name"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 {console.log(name)}
@@ -110,6 +111,7 @@ export default function OutlinedCard() {
                   required
                   id="outlined-required"
                   label="parentPhone"
+                  value={parentPhone}
                   onChange={(e) => setParentPhone(e.target.value)}
                 />
                 <TextField
