@@ -12,7 +12,6 @@ export default function Delete() {
   
 
   const handleSubmit = () => {
-    // e.preventDefault();
     axiosPublic
       .post("/deleteStudent", {
        id, 
@@ -49,7 +48,7 @@ export default function Delete() {
               </div>
             </Box>
             <Button onClick={() => handleSubmit()} variant="contained">
-              Add student
+             Delete student
             </Button>
           </CardContent>
         </React.Fragment>

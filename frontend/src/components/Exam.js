@@ -16,11 +16,7 @@ export default function Exam() {
   const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
 
-//   const SelectionHandeler = (id) => {
-//     setAtttend((oldId) => {
-//       return oldId.push({ id: id });
-//     });
-//   };
+
   React.useEffect(() => {
     axiosPublic
       .get("/getStudents")
@@ -60,17 +56,19 @@ export default function Exam() {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
-        onSelectionModelChange={(e) => {
-          setIds(e);
-        }}
-        isRowSelectable={(params) => {
-          //  let x =  axiosPublic.
-          //  post("/atttendStudent",{studentsIds:[{id:params.row.id}]})
-          //  .then((res)=>  true)
-          //  .then(err=>  false)
-          return true;
-        }}
+        // checkboxSelection
+        // onSelectionModelChange={(e) => {
+        //   setIds(e);
+        // }
+    // }
+        // isRowSelectable={(params) => {
+        //   //  let x =  axiosPublic.
+        //   //  post("/atttendStudent",{studentsIds:[{id:params.row.id}]})
+        //   //  .then((res)=>  true)
+        //   //  .then(err=>  false)
+        //   return true;
+        // }
+    // }
       />
       <Button onClick={() => examHandeler()}> take exam ruselt </Button>
     </div>

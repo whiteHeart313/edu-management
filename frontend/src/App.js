@@ -9,18 +9,18 @@ import { Routes, Route } from "react-router-dom";
 import Delete from "./components/Delete";
 
 function App() {
-  const [students, setStudents] = useState([]);
+  // const [students, setStudents] = useState([]);
 
-  // get all products from the backend
-  useEffect(() => {
-    fetch("http://localhost:8080/v1/getStudents")
-      .then((res) => res.json())
-      .then((data) => setStudents(data))
-  }, []);
+  // // get all products from the backend
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/v1/getStudents")
+  //     .then((res) => res.json())
+  //     .then((data) => setStudents(data))
+  // }, []);
 
   return (
     <div className="App">
-      {console.log(students)}
+      {/* {console.log(students)} */}
       <SideNav />
       <Box
         component="main"
