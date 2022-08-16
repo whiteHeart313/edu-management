@@ -3,8 +3,10 @@ import SideNav from "../src/components/Drawer";
 import { Box } from "@mui/system";
 import StudDay from "./components/StudDay";
 import AddStue from "./components/AddStu";
+import Exam from "./components/Exam"
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import Delete from "./components/Delete";
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -28,6 +30,9 @@ function App() {
           <Routes>
             <Route path="/" element={<StudDay />} />
             <Route path="/add" element={<AddStue />} />
+            <Route path="/exam" element={<Exam />} />
+            <Route path="/delete" element={<Delete />} />
+
           </Routes>
         </div>
       </Box>
