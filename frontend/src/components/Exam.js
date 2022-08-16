@@ -36,16 +36,20 @@ export default function Exam() {
   const examHandeler = () => {
     axiosPublic
       .post("/createExam", {
-        studentsResults: [
+        "studentsResults": 
+        [
           {
-            st_id: "9dc091f0-1a1f-4f85-b8d8-340a71567f12",
-            examResult: 5,
-          },
+            "exam" : {
+              "st_id": "9dc091f0-1a1f-4f85-b8d8-340a71567f12",
+              "examResult": 5
+            } 
+          }  
+          
         ] , 
-        examType : true , // dialy eam 
-        date : "7/9/2022"
-        ,
-      })
+        "ExamType" : true  , 
+        "date" : "7/9/2022"
+        
+  })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
@@ -70,7 +74,7 @@ export default function Exam() {
         // }
     // }
       />
-      <Button onClick={() => examHandeler()}> take exam ruselt </Button>
+      <Button onClick={() => examHandeler()}>تسجيل درحه الامتحان </Button>
     </div>
   );
 }
