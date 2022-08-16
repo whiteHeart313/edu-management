@@ -35,7 +35,7 @@ export type studentType = Pick<
   'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'
 >;
 
-export type exam  = {st_id : string  , examResult : Number  , dialyExam : Boolean , date : string }
+export type exam  = {st_id : string  , examResult : Number  }
 
 export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 

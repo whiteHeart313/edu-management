@@ -113,7 +113,7 @@ export class models implements datastore {
         exams.examResult
       )
       .then(e => {
-        console.log('added to DB');
+        console.log('added to DB in monthly exam ');
       });
   }
   getExamByMonth(month: string): Promise<Exam[] | undefined> {
