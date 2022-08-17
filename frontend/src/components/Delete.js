@@ -7,14 +7,12 @@ import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
 
 export default function Delete() {
- 
   const [id, setId] = React.useState("");
-  
 
   const handleSubmit = () => {
     axiosPublic
       .post("/deleteStudent", {
-       id, 
+        id,
       })
       .then((res) => {
         console.log(res);
@@ -35,7 +33,6 @@ export default function Delete() {
               autoComplete="off"
             >
               <div>
-               
                 {console.log(id)}
                 <TextField
                   required
@@ -44,11 +41,10 @@ export default function Delete() {
                   onChange={(e) => setId(e.target.value)}
                   value={id}
                 />
-               
               </div>
             </Box>
             <Button onClick={() => handleSubmit()} variant="contained">
-             Delete student
+              Delete student
             </Button>
           </CardContent>
         </React.Fragment>

@@ -65,7 +65,7 @@ export default function StudDay() {
           
         }}
       />
-      {/* () => atttendHandeler() */}
+    
       <Button onClick={()=>atttendHandeler()}> take atttend </Button>
     </div>
   );

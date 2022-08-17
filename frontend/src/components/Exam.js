@@ -60,19 +60,7 @@ export default function Exam() {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        // checkboxSelection
-        // onSelectionModelChange={(e) => {
-        //   setIds(e);
-        // }
-    // }
-        // isRowSelectable={(params) => {
-        //   //  let x =  axiosPublic.
-        //   //  post("/atttendStudent",{studentsIds:[{id:params.row.id}]})
-        //   //  .then((res)=>  true)
-        //   //  .then(err=>  false)
-        //   return true;
-        // }
-    // }
+        
       />
       <Button onClick={() => examHandeler()}>تسجيل درحه الامتحان </Button>
     </div>
