@@ -52,7 +52,7 @@ const groups = [
 export default function OutlinedCard() {
   const [grade, setGrade] = React.useState("اول ثانوي");
   const [type, setType] = React.useState("عام");
-  const [group,setGroup] = React.useState("سبت و ثلاثاء")
+  const [group,setGroup] = React.useState("السبت و الثلاثاء")
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [parentPhone, setParentPhone] = React.useState("");

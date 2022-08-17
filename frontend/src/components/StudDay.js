@@ -18,7 +18,7 @@ export default function StudDay() {
   const [ids,setIds] = React.useState([])
   const [students, setStudents] = React.useState([]);
 
-  
+
   React.useEffect(() => {
     axiosPublic
       .get("/getStudents")
@@ -47,6 +47,7 @@ export default function StudDay() {
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid
         rows={students}
+        mode = "dark"
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}

@@ -22,8 +22,16 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import BallotIcon from '@mui/icons-material/Ballot';
 import { useNavigate } from 'react-router-dom';
+import StudDay from "./StudDay";
+import AddStue from "./AddStu";
+import Exam from "./Exam"
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Delete from "./Delete";
+
 
 const icons = [<AssignmentTurnedInIcon/>,<PersonAddIcon/>, <PersonRemoveIcon/>,<BallotIcon/>]
+const pages = ["","add","delete"," "]
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -105,7 +113,8 @@ export default function MiniDrawer() {
 
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box
+     sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -135,7 +144,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['غياب', 'اضافه طالب', 'حذف طالب', 'الامتحانات'].map((text, index) => (
-            <ListItem onClick={() => navigate('/')} key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem onClick={() => navigate(`${pages[index]}`)} key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -159,7 +168,16 @@ export default function MiniDrawer() {
         </List>
         <Divider />
       </Drawer>
-      
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+      <Routes>
+            <Route path="/" element={<StudDay />} />
+            <Route path="/add" element={<AddStue />} />
+            <Route path="/exam" element={<Exam />} />
+            <Route path="/delete" element={<Delete />} />
+
+          </Routes>
+    </Box>
     </Box>
   );
 }
