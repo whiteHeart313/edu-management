@@ -1,4 +1,4 @@
-import { db } from '../datastore';
+import { db } from '../datastore/datastore';
 import { Exam, typeValidation, exam } from '../types';
 import crypto from 'crypto';
 

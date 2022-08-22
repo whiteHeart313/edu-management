@@ -1,8 +1,8 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
-import { initDB } from './datastore';
-import { getStudents, addStudents, deleteStudent, changeGroup , attendStudent} from './Handler/StudentHandler';
-import {createExam , getExamByMonth} from './Handler/ExamsHandler' ; 
+import { initDB } from './datastore/datastore';
+import { getStudents, addStudents, deleteStudent, changeGroup , attendStudent , getTodaysAttendence} from './Handler/StudentHandler';
+import {createExam , getExamByMonth } from './Handler/ExamsHandler' ; 
 import { errHandler } from './Middleware/errorMidlware';
 (async () => {
   await initDB();
@@ -21,6 +21,7 @@ import { errHandler } from './Middleware/errorMidlware';
   });
 
   app.get('/v1/getStudents', asyncHandler(getStudents));
+  app.get('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
   app.post('/v1/getExamByMonth' , asyncHandler(getExamByMonth))
 
   app.post('/v1/addStudent', asyncHandler(addStudents));

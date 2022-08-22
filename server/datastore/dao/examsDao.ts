@@ -1,6 +1,6 @@
 
 
-import { Exam} from '../../types';
+import { Exam, student} from '../../types';
 
 
 export interface examsDao {
@@ -12,5 +12,6 @@ export interface examsDao {
     getAllMonthlyExams(): Promise<Exam[]> ; 
     getStudentDailyExams(): Promise<Exam[]> ; 
     getStudentMonthlyExams(): Promise<Exam[]> ; 
+    getTodaysAttendence():Promise<student[] | undefined> ; 
 
 }

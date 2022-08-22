@@ -1,4 +1,4 @@
-import { datastore } from '../datastore';
+import { datastore } from '../datastore/datastore';
 
 import { student, attendence, Exam } from '../types';
 import { Database, open as sqliteOpen } from 'sqlite';
@@ -116,7 +116,7 @@ export class models implements datastore {
         console.log('added to DB in monthly exam ');
       });
   }
-  getExamByMonth(month: string): Promise<Exam[] | undefined> {
+  async getExamByMonth(month: string): Promise<Exam[] | undefined> {
     return this.db.get(
       `SELECT  monthlyExams.examResult , students.name , students.grade
       FROM monthlyExams 
@@ -138,5 +138,30 @@ export class models implements datastore {
   }
   getStudentMonthlyExams(): Promise<Exam[]> {
     throw new Error('Method not implemented.');
+  }
+
+  /*
+this is very costly  , 
+every request to this endpoint is going to ask to perform this query 
+  BETTER APPROACH : 
+
+  is to have a cach to store the result of this query in at the beging of the day , which means that there is no stident has attended ..
+  every request to this end endpoint is having students that has attended today , we just going to the cach and remove them from the cach 
+  as DELETE function is a way faster that this complex query ....... 
+**/
+
+  async getTodaysAttendence(): Promise<student[] | undefined> {
+    const today = await this.getDate();
+
+    return this.db.all(
+      `SELECT  *
+      FROM students 
+      WHERE NOT EXISTS (
+       SELECT  * 
+        FROM attendence 
+      WHERE attendence.st_id = students.id AND attendence.date  =? )
+     `,
+      today
+    );
   }
 }

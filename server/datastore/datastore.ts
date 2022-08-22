@@ -1,8 +1,8 @@
-import { StudentDao  } from './datastore/dao/studentDao';
+import { StudentDao  } from './dao/studentDao';
 
-import { examsDao  } from './datastore/dao/examsDao';
+import { examsDao  } from './dao/examsDao';
 
-import { models } from './sql/Database';
+import { models } from '../sql/Database';
 
 export interface datastore extends StudentDao , examsDao {}
 

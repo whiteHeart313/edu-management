@@ -1,8 +1,9 @@
-import { db } from '../datastore';
+import { db } from '../datastore/datastore';
 import { student, typeValidation, studentType } from '../types';
 import crypto from 'crypto';
 
 export const getStudents: typeValidation<{}, { students: student[] }> = async (req, res) => {
+  // get students with annotation of this student has attended or not
   return res.status(200).send({ students: await db.getAllStudent() });
 };
 
@@ -79,28 +80,36 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
   res
 ) => {
   const studentsIds = req.body.studentsIds!;
-  let numberOfInvalidStudents = 0 ; 
+  let numberOfInvalidStudents = 0;
   for (let i = 0; i < studentsIds.length; i++) {
     const student = studentsIds[i];
     console.log('this is the student ', student);
 
     if (await studentNotExist(student.id)) {
       res.status(400).send({ message: `Student :  ${student} is not existing in the system !` });
-      numberOfInvalidStudents++ ; 
-      continue ; 
-    }
-    else if (await studentHasBeenAttended(student.id)) {
+      numberOfInvalidStudents++;
+      continue;
+    } else if (await studentHasBeenAttended(student.id)) {
       res.status(400).send({ message: `Student : ${student} already attended !` });
-      numberOfInvalidStudents++ ; 
-      continue ; 
+      numberOfInvalidStudents++;
+      continue;
     }
-    
+
     await db.attendStudent(crypto.randomUUID(), student.id);
-    
   }
-  if(numberOfInvalidStudents == studentsIds.length) 
-      return res.status(400).send({message : "no one of your students has been attended for various problems "})
+
+  if (numberOfInvalidStudents == studentsIds.length)
+    return res
+      .status(400)
+      .send({ message: 'no one of your students has been attended for various problems ' });
   return res.status(200).send({ message: `student has been attended successfully ` });
+};
+
+export const getTodaysAttendence: typeValidation<{}, { students: student[] }> = async (
+  req,
+  res
+) => {
+  return res.status(200).send({ students: await db.getTodaysAttendence() });
 };
 
 async function studentNotExist(id: string) {
