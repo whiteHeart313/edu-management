@@ -90,7 +90,14 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
       numberOfInvalidStudents++;
       continue;
     } else if (await studentHasBeenAttended(student.id)) {
-      res.status(400).send({ message: `Student : ${student} already attended !` });
+      /*
+         To Solve Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client ,
+         Here You Need To use return statement to solve this error.
+         Error Is occurs Because Of Your res.status(400).json is executing and then your function is not going to stop. 
+         Thats Why You Are Facing this error. So that Just add return statement in your request handler function Just like This: 
+         return res.status(400).json
+      */
+
       numberOfInvalidStudents++;
       continue;
     }
@@ -99,9 +106,15 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
   }
 
   if (numberOfInvalidStudents == studentsIds.length)
+    return res.status(400).send({ message: 'all of your students have been attended already  ' });
+
+  if (numberOfInvalidStudents > 0) {
     return res
-      .status(400)
-      .send({ message: 'no one of your students has been attended for various problems ' });
+      .status(200)
+      .send({
+        message: `some of your students already attended and the other successfully attended `,
+      });
+  }
   return res.status(200).send({ message: `student has been attended successfully ` });
 };
 
