@@ -16,11 +16,7 @@ export default function Exam() {
   const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
 
-//   const SelectionHandeler = (id) => {
-//     setAtttend((oldId) => {
-//       return oldId.push({ id: id });
-//     });
-//   };
+
   React.useEffect(() => {
     axiosPublic
       .get("/getStudents")
@@ -40,16 +36,20 @@ export default function Exam() {
   const examHandeler = () => {
     axiosPublic
       .post("/createExam", {
-        studentsResults: [
+        "studentsResults": 
+        [
           {
-            st_id: "9dc091f0-1a1f-4f85-b8d8-340a71567f12",
-            examResult: 5,
-          },
+            "exam" : {
+              "st_id": "9dc091f0-1a1f-4f85-b8d8-340a71567f12",
+              "examResult": 5
+            } 
+          }  
+          
         ] , 
-        examType : true , // dialy eam 
-        date : "7/9/2022"
-        ,
-      })
+        "ExamType" : true  , 
+        "date" : "7/9/2022"
+        
+  })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
   };
@@ -60,19 +60,9 @@ export default function Exam() {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
-        onSelectionModelChange={(e) => {
-          setIds(e);
-        }}
-        isRowSelectable={(params) => {
-          //  let x =  axiosPublic.
-          //  post("/atttendStudent",{studentsIds:[{id:params.row.id}]})
-          //  .then((res)=>  true)
-          //  .then(err=>  false)
-          return true;
-        }}
+        
       />
-      <Button onClick={() => examHandeler()}> take exam ruselt </Button>
+      <Button onClick={() => examHandeler()}>تسجيل درحه الامتحان </Button>
     </div>
   );
 }

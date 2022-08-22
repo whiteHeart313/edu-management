@@ -12,38 +12,13 @@ const columns = [
   { field: "type", headerName: "المدرسه", width: 160 },
 ];
 
-const student = [
-  {
-    id: "51",
-    name: "Mohamed Gebo ",
-    phone: "01095581022",
-    parentPhone: "01015331077",
-    grade: "9",
-    group_: "group b",
-    type: "لغات",
-  },
-  {
-    id: "24cade4a-8be5-4ad2-b16c-ccf097ca7ea1",
-    name: "Mohamed Gebo ",
-    phone: "01012222222",
-    parentPhone: "555555555",
-    grade: "9",
-    group_: "group G",
-    type: "لغات",
-  },
-];
+
 
 export default function StudDay() {
   const [ids,setIds] = React.useState([])
   const [students, setStudents] = React.useState([]);
-  const [atttend, setAtttend] = React.useState([]);
 
-  const SelectionHandeler = (id)=>{
-    setAtttend((oldId)=>{
-     return oldId.push({id:id})
-     })
 
-    }
   React.useEffect(() => {
     axiosPublic
       .get("/getStudents")
@@ -72,6 +47,7 @@ export default function StudDay() {
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid
         rows={students}
+        mode = "dark"
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
@@ -89,7 +65,7 @@ export default function StudDay() {
           
         }}
       />
-      {/* () => atttendHandeler() */}
+    
       <Button onClick={()=>atttendHandeler()}> take atttend </Button>
     </div>
   );
