@@ -1,6 +1,6 @@
 import { datastore } from '../datastore/datastore';
 
-import { student, attendence, Exam } from '../types';
+import { student, attendence, Exam, BooksMoney, money, MonthlyMoney, monthlyMoneyWithStudetData } from '../types';
 import { Database, open as sqliteOpen } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import path from 'path';
@@ -59,7 +59,7 @@ export class models implements datastore {
   }
 
   async attendStudent(randomId: string, studentId: string): Promise<void> {
-    const today = await this.getDate();
+    const today = await this.getDate(true);
 
     await this.db
       .run('INSERT INTO attendence (id, st_id , date ) VALUES (?,?,?)', randomId, studentId, today)
@@ -69,7 +69,7 @@ export class models implements datastore {
   }
 
   async getStudentAttendenceToday(studentId: string): Promise<attendence | undefined> {
-    const today = await this.getDate();
+    const today = await this.getDate(true);
     return this.db.get<attendence>(
       `SELECT * FROM attendence WHERE st_id = ? AND date = ?`,
       studentId,
@@ -77,7 +77,7 @@ export class models implements datastore {
     );
   }
 
-  async getDate(): Promise<string> {
+  async getDate(fullYear : boolean): Promise<string> {
     let ts = Date.now();
 
     let date_ob = new Date(ts);
@@ -85,6 +85,7 @@ export class models implements datastore {
     let month = date_ob.getMonth() + 1;
     let year = date_ob.getFullYear();
     console.log(year + '-' + month + '-' + date);
+    if(!fullYear) return year + '-' + month ; 
     return year + '-' + month + '-' + date;
   }
 
@@ -117,7 +118,7 @@ export class models implements datastore {
       });
   }
   async getExamByMonth(month: string): Promise<Exam[] | undefined> {
-    return this.db.get(
+    return this.db.all(
       `SELECT  monthlyExams.examResult , students.name , students.grade
       FROM monthlyExams 
       INNER JOIN students 
@@ -127,6 +128,7 @@ export class models implements datastore {
       month
     );
   }
+
   getAllDailyExams(): Promise<Exam[]> {
     throw new Error('Method not implemented.');
   }
@@ -151,7 +153,7 @@ every request to this endpoint is going to ask to perform this query
 **/
 
   async getTodaysAttendence(): Promise<student[] | undefined> {
-    const today = await this.getDate();
+    const today = await this.getDate(true);
 
     return this.db.all(
       `SELECT  *
@@ -163,5 +165,37 @@ every request to this endpoint is going to ask to perform this query
      `,
       today
     );
+  }
+
+  // money queries
+
+  async getMonthlyMoney(): Promise<monthlyMoneyWithStudetData[] > {
+    const currentMonth = await this.getDate(false)
+    return this.db.all(
+      `SELECT  
+          monthlyMoney.date , 
+          monthlyMoney.money , 
+          students.name , 
+          students.grade , 
+          students.group_ ,
+          students.type,  
+          students.phone ,
+          students.parentPhone 
+      FROM monthlyMoney 
+      INNER JOIN students 
+      ON monthlyMoney.st_id = students.id
+      WHERE monthlyMoney.date  = ?
+     ` , 
+     currentMonth
+    );
+  }
+  getBooksMoney(): Promise<BooksMoney[] | undefined> {
+    throw new Error('Method not implemented.');
+  }
+  PutMonthlyMoneyToStudents(monthlyMony: MonthlyMoney): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  PutBooksMoneyToStudets(BooksMony: money): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }
