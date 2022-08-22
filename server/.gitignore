@@ -28,4 +28,4 @@ yarn-error.log*
 
 # db 
 
-server/sql/datafile.sqlite
+sql/datafile.sqlite

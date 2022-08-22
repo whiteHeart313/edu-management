@@ -22,12 +22,12 @@ import { errHandler } from './Middleware/errorMidlware';
 
   app.get('/v1/getStudents', asyncHandler(getStudents));
   app.get('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
-  app.post('/v1/getExamByMonth' , asyncHandler(getExamByMonth))
 
+  app.post('/v1/atttendStudent' , asyncHandler(attendStudent))
+  app.post('/v1/getExamByMonth' , asyncHandler(getExamByMonth))
   app.post('/v1/addStudent', asyncHandler(addStudents));
   app.post('/v1/deleteStudent', asyncHandler(deleteStudent));
   app.post('/v1/changeGroup', asyncHandler(changeGroup));
-  app.post('/v1/atttendStudent' , asyncHandler(attendStudent))
   app.post('/v1/createExam' , asyncHandler(createExam))
   app.use(errHandler);
   app.listen(port, () => {
