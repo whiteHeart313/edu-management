@@ -1,0 +1,58 @@
+1 - get req res for : getStudents 
+Object { students: (4) […] }
+​
+students: Array(4) [ {…}, {…}, {…}, … ]
+​​
+0: Object { id: "47558da7-1a8f-4025-99fa-f91d9b024737", name: "alqassa", phone: "01030765500", … }
+​​
+1: Object { id: "1d42946f-fafa-4c1e-857a-90115cec3064", name: "cvp", phone: "0230303", … }
+​​
+2: Object { id: "9dc091f0-1a1f-4f85-b8d8-340a71567f12", name: "alo", phone: "2555555", … }
+​​
+3: Object { id: "0c68c1a3-aed6-456a-a3db-c5f8f862ee59", name: "aaaa", phone: "5555", … }
+​​
+length: 4
+
+#######################################
+ get req res for : getTodaysAttendence 
+Object { students: (4) […] }
+​
+students: Array(4) [ {…}, {…}, {…}, … ]
+​​
+0: Object { id: "47558da7-1a8f-4025-99fa-f91d9b024737", name: "alqassa", phone: "01030765500", … }
+​​​
+grade: "الثاني الثانوي"
+​​​
+group_: "الأحد و الأربعاء"
+​​​
+id: "47558da7-1a8f-4025-99fa-f91d9b024737"
+​​​
+name: "alqassa"
+​​​
+parentPhone: "01030765500"
+​​​
+phone: "01030765500"
+​​​
+type: "لغات"
+​​​
+<prototype>: Object { … }
+​​
+1: Object { id: "1d42946f-fafa-4c1e-857a-90115cec3064", name: "cvp", phone: "0230303", … }
+​​
+2: Object { id: "9dc091f0-1a1f-4f85-b8d8-340a71567f12", name: "alo", phone: "2555555", … }
+​​
+3: Object { id: "0c68c1a3-aed6-456a-a3db-c5f8f862ee59", name: "aaaa", phone: "5555", … }
+​​
+length: 4
+
+
+#####################################
+
+3 -  get req res for : getMonthlyMoneyForAllStudents 
+Object { StudentsMonthlyMoney: [] }
+​
+StudentsMonthlyMoney: Array []
+​​
+length: 0
+
+
