@@ -1,6 +1,6 @@
 import { datastore } from '../datastore/datastore';
 
-import { student, attendence, Exam, BooksMoney, money, MonthlyMoney, monthlyMoneyWithStudetData } from '../types';
+import { student, attendence, Exam, BooksMoney, money, MonthlyMoney, monthlyMoneyWithStudetData , currentDate} from '../types';
 import { Database, open as sqliteOpen } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import path from 'path';
@@ -59,34 +59,40 @@ export class models implements datastore {
   }
 
   async attendStudent(randomId: string, studentId: string): Promise<void> {
-    const today = await this.getDate(true);
+    const today : currentDate = await this.getDate();
 
     await this.db
-      .run('INSERT INTO attendence (id, st_id , date ) VALUES (?,?,?)', randomId, studentId, today)
+      .run('INSERT INTO attendence (id, st_id , day , month , year) VALUES (?,?,?,?,?)', randomId, studentId,today.day , today.month , today.year )
       .then(e => {
         console.log('added to DB');
       });
   }
 
   async getStudentAttendenceToday(studentId: string): Promise<attendence | undefined> {
-    const today = await this.getDate(true);
+    const today = await this.getDate();
     return this.db.get<attendence>(
-      `SELECT * FROM attendence WHERE st_id = ? AND date = ?`,
+      `SELECT * FROM attendence WHERE st_id = ? AND day = ?  AND month = ? AND year = ?`,
       studentId,
-      today
+      today.day , 
+      today.month , 
+      today.year
     );
   }
 
-  async getDate(fullYear : boolean): Promise<string> {
+  async getDate(): Promise<currentDate> {
     let ts = Date.now();
 
     let date_ob = new Date(ts);
-    let date = date_ob.getDate();
-    let month = date_ob.getMonth() + 1;
-    let year = date_ob.getFullYear();
-    console.log(year + '-' + month + '-' + date);
-    if(!fullYear) return year + '-' + month ; 
-    return year + '-' + month + '-' + date;
+    let day = date_ob.getDate().toString();
+    let month = (date_ob.getMonth() + 1).toString();
+    let year = date_ob.getFullYear().toString();
+    console.log(year + '-' + month + '-' + day);
+    const currentDate : currentDate = {
+      day : day , 
+      month : month , 
+      year : year
+    }
+    return currentDate ; 
   }
 
   // Exams Queries
@@ -153,7 +159,7 @@ every request to this endpoint is going to ask to perform this query
 **/
 
   async getTodaysAttendence(): Promise<student[] | undefined> {
-    const today = await this.getDate(true);
+    const today = await this.getDate();
 
     return this.db.all(
       `SELECT  *
@@ -161,16 +167,34 @@ every request to this endpoint is going to ask to perform this query
       WHERE NOT EXISTS (
        SELECT  * 
         FROM attendence 
-      WHERE attendence.st_id = students.id AND attendence.date  =? )
+      WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
      `,
-      today
+      today.day , 
+      today.month , 
+      today.year
     );
   }
+
+  // async getMonthAttendence(): Promise<student[] | undefined> {
+  //   const today = await this.getDate(false);
+
+  //   return this.db.all(
+  //     `SELECT  *
+  //     FROM students 
+  //     WHERE  EXISTS (
+  //      SELECT  * 
+  //       FROM attendence 
+  //     WHERE attendence.st_id = students.id AND attendence.date  = ? )
+  //    `,
+  //     today
+  //   );
+  // }
 
   // money queries
 
   async getMonthlyMoney(): Promise<monthlyMoneyWithStudetData[] > {
-    const currentMonth = await this.getDate(false)
+    const currentMonth = await this.getDate()
+    const month : string = currentMonth.month + '-' + currentMonth.year
     return this.db.all(
       `SELECT  
           monthlyMoney.date , 
@@ -186,7 +210,7 @@ every request to this endpoint is going to ask to perform this query
       ON monthlyMoney.st_id = students.id
       WHERE monthlyMoney.date  = ?
      ` , 
-     currentMonth
+     month
     );
   }
   getBooksMoney(): Promise<BooksMoney[] | undefined> {

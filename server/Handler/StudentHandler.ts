@@ -125,6 +125,14 @@ export const getTodaysAttendence: typeValidation<{}, { students: student[] }> = 
   return res.status(200).send({ students: await db.getTodaysAttendence() });
 };
 
+export const getMonthAttendence: typeValidation<{}, { students: student[] }> = async (
+  req,
+  res
+) => {
+  return res.status(200).send({ students: await db.getTodaysAttendence() });
+};
+
+
 async function studentNotExist(id: string) {
   if (!(await db.getStudentById(id))) return true;
   return false;

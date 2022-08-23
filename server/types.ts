@@ -63,5 +63,6 @@ export type monthlyMoneyWithStudetData = MonthlyMoneyType & studentType;
 
 export type booksMoneyWithStudetData = BooksMoney & student;
 
+export type currentDate = {day : string , month : string , year :string }
 
 

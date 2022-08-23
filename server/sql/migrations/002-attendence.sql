@@ -6,7 +6,7 @@ the built-in Date and Time Functions of SQLite are capable of storing dates and 
 CREATE TABLE attendence (
 
     id 
-         VARCHAR PRIMARY KEY , 
+                 VARCHAR PRIMARY KEY , 
     st_id        VARCHAR NOT NULL , 
     date         INTEGER NOT NULL , 
     FOREIGN KEY (st_id) REFERENCES students (id)
