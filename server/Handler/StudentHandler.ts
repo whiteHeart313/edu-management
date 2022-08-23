@@ -1,5 +1,5 @@
 import { db } from '../datastore/datastore';
-import { student, typeValidation, studentType } from '../types';
+import { student, typeValidation, studentType, currentDate } from '../types';
 import crypto from 'crypto';
 
 export const getStudents: typeValidation<{}, { students: student[] }> = async (req, res) => {
@@ -109,11 +109,9 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
     return res.status(400).send({ message: 'all of your students have been attended already  ' });
 
   if (numberOfInvalidStudents > 0) {
-    return res
-      .status(200)
-      .send({
-        message: `some of your students already attended and the other successfully attended `,
-      });
+    return res.status(200).send({
+      message: `some of your students already attended and the other successfully attended `,
+    });
   }
   return res.status(200).send({ message: `student has been attended successfully ` });
 };
@@ -125,13 +123,10 @@ export const getTodaysAttendence: typeValidation<{}, { students: student[] }> = 
   return res.status(200).send({ students: await db.getTodaysAttendence() });
 };
 
-export const getMonthAttendence: typeValidation<{}, { students: student[] }> = async (
-  req,
-  res
-) => {
-  return res.status(200).send({ students: await db.getTodaysAttendence() });
+export const getMonthAttendence: typeValidation<{date : currentDate}, { students: student[] }> = async (req, res) => {
+  if(!req.body.date) return res.status(400).send({message : "i need to specidy the date you want , please provide a date as an object "})
+  return res.status(200).send({ students: await db.getMonthlyAttendence(req.body.date!) });
 };
-
 
 async function studentNotExist(id: string) {
   if (!(await db.getStudentById(id))) return true;

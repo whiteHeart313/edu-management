@@ -158,6 +158,7 @@ every request to this endpoint is going to ask to perform this query
   as DELETE function is a way faster that this complex query ....... 
 **/
 
+// return students who has not been recorded as attendence yet 
   async getTodaysAttendence(): Promise<student[] | undefined> {
     const today = await this.getDate();
 
@@ -175,20 +176,22 @@ every request to this endpoint is going to ask to perform this query
     );
   }
 
-  // async getMonthAttendence(): Promise<student[] | undefined> {
-  //   const today = await this.getDate(false);
+  // return all studets who has attended this month 
+  async getMonthlyAttendence(date : currentDate ): Promise<student[] | undefined> {
+    //const today = await this.getDate();
 
-  //   return this.db.all(
-  //     `SELECT  *
-  //     FROM students 
-  //     WHERE  EXISTS (
-  //      SELECT  * 
-  //       FROM attendence 
-  //     WHERE attendence.st_id = students.id AND attendence.date  = ? )
-  //    `,
-  //     today
-  //   );
-  // }
+    return this.db.all(
+      `SELECT  *
+      FROM students 
+      WHERE  EXISTS (
+       SELECT  * 
+        FROM attendence 
+      WHERE attendence.st_id = students.id AND attendence.month = ? AND attendence.year = ?)
+     `,
+     date.month,
+     date.year 
+    );
+  }
 
   // money queries
 
