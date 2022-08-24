@@ -27,6 +27,7 @@ import Exam from "./Exam";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Delete from "./Delete";
+import ChangeGroup from "./ChangeGruope";
 
 const icons = [
   <AssignmentTurnedInIcon />,
@@ -188,6 +189,7 @@ export default function MiniDrawer() {
           <Route path="/add" element={<AddStue />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/delete" element={<Delete />} />
+          <Route path="/Change" element={<ChangeGroup/>} />
         </Routes>
       </Box>
     </Box>
