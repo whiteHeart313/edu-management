@@ -1,3 +1,7 @@
+
+
+
+((((((((((((((((((get))))))))))))))))))
 1 - get req res for : getStudents 
 Object { students: (4) […] }
 ​
@@ -55,4 +59,100 @@ StudentsMonthlyMoney: Array []
 ​​
 length: 0
 
+(((((((((((((((((((((((((((post)))))))))))))))))))))))))))
+1 - post req for : /atttendStudent 
+Object { message: "student has been attended successfully " }
+​
+message: "student has been attended successfully "
 
+##############################################################
+2 - post req for : /getExamByMonth 
+Object { exams: [] }
+​
+exams: Array []
+​​
+length: 0
+
+##########################################
+
+3 - post req for : /addStudent 
+Object { message: "student has been created successfully " }
+​
+message: "student has been created successfully "
+
+#################################################
+4 - post req for : /deleteStudent 
+Object { message: "user has been deleted successfully  " }
+​
+message: "user has been deleted successfully  "
+
+#####################################################
+5-  post req for : /changeGroup 
+Object { message: "student  has been moved to جمعه  successfully  " }
+​
+message: "student  has been moved to جمعه  successfully  "
+
+#####################################################
+6-  post req for : /createExam 
+Object { message: "cool exames results  are added to this student" }
+​
+message: "cool exames results  are added to this student"
+
+.
+
+
+
+
+
+,,,,,>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+Array(12) [ "6 - post req for : /getExamByMonth", {…}, "6 - post req  error for : /getExamByMonth", 2, "6 - post req for : /changeGroup", {…}, "6 - post req  error for : /changeGroup", 6, "6 - post req for : /createExam", {…}, … ]
+​
+0: "6 - post req for : /getExamByMonth"
+​
+1: Object { exams: [] }
+​
+2: "6 - post req  error for : /getExamByMonth"
+​
+3: 2
+​
+4: "6 - post req for : /changeGroup"
+​
+5: Object { message: "student  has been moved to جمعه  successfully  " }
+​
+6: "6 - post req  error for : /changeGroup"
+​
+7: 6
+​
+8: "6 - post req for : /createExam"
+​
+9: Object { message: "cool exames results  are added to this student" }
+​
+10: "6 - post req  error for : /createExam"
+​
+11: 10
+​
+length: 12
+​
+<prototype>: Array []
+App.js:46
+???????????????????????????????????????????
+[
+  "6 - post req for : /getExamByMonth",
+  {
+    "exams": []
+  },
+  "6 - post req  error for : /getExamByMonth",
+  2,
+  "6 - post req for : /changeGroup",
+  {
+    "message": "student  has been moved to جمعه  successfully  "
+  },
+  "6 - post req  error for : /changeGroup",
+  6,
+  "6 - post req for : /createExam",
+  {
+    "message": "cool exames results  are added to this student"
+  },
+  "6 - post req  error for : /createExam",
+  10
+]
