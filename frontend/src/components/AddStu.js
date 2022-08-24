@@ -46,6 +46,10 @@ const groups = [
     value: "الأثنين و الخميس",
     label: "الأثنين و الخميس",
   },
+  {
+    value: "الجمعة",
+    label: "الجمعة",
+  }
 ];
 
 export default function OutlinedCard() {
