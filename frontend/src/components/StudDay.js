@@ -21,7 +21,7 @@ export default function StudDay() {
 
   React.useEffect(() => {
     axiosPublic
-      .get("/getStudents")
+      .get("/getTodaysAttendence ")
       .then((res) => setStudents(res.data.students))
       .then((err) => console.log(err));
   }, []);

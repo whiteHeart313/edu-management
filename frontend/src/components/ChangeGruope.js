@@ -8,12 +8,12 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 100 },
   { field: "name", headerName: "الإسم", width: 130 },
   { field: "grade", headerName: "السنه", width: 130 },
   { field: "group_", headerName: "المجموعه", width: 130 },
   { field: "phone", headerName: "رقم الهاتف", type: "number", width: 150 },
-  { field: "type", headerName: "المدرسه", width: 160 },
+  { field: "type", headerName: "المدرسه", width: 1 },
 ];
 
 const groups = [
@@ -96,12 +96,12 @@ export default function ChangeGroup() {
                 </TextField>
               </div>
             </Box>
-            <Button onClick={() => handleSubmit()} variant="contained">
-              change the Group for student
-            </Button>
           </CardContent>
         </React.Fragment>
       </Card>
+      <Button onClick={() => handleSubmit()} variant="contained">
+              change the Group for student
+            </Button>
     </Box>
   );
 }

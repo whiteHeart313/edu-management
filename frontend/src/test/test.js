@@ -1,10 +1,10 @@
 import { axiosPublic } from "../api/axiosPublic";
 
+
 export function testEndPoints(endpoint = ["/"], reqtype = "get", postData =[{}]) {
   let index =  0 
   let reqArr = []
   for (let url of endpoint) {
-    
     if (reqtype === "get") {
       axiosPublic
       .get(url)
