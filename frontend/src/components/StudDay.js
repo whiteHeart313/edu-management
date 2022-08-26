@@ -29,6 +29,7 @@ export default function StudDay() {
   const [ids,setIds] = React.useState([])
   const [students, setStudents] = React.useState([]);
   const [relood,Setrelood] = React.useState(true)
+  const [val,setVal] = React.useState("")
 
   React.useEffect(() => {
     axiosPublic
