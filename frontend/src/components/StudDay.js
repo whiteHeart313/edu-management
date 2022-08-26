@@ -1,7 +1,14 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridEditSingleSelectCell,
+  GridCellEditStopReasons } from "@mui/x-data-grid";
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+
+
+
+
+<> </>
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -10,6 +17,10 @@ const columns = [
   { field: "group_", headerName: "المجموعه", width: 130 },
   { field: "phone", headerName: "رقم الهاتف", type: "number", width: 150 },
   { field: "type", headerName: "المدرسه", width: 160 },
+  { field: "mony1", headerName: "test mony input 1", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), bgcolor:"'#376331'"},
+  { field: "mony2", headerName: "test mony input 2", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), stopCellEditMode:true,bgcolor:"'#376331'"},
+
+
 ];
 
 
@@ -17,14 +28,14 @@ const columns = [
 export default function StudDay() {
   const [ids,setIds] = React.useState([])
   const [students, setStudents] = React.useState([]);
-
+  const [relood,Setrelood] = React.useState(true)
 
   React.useEffect(() => {
     axiosPublic
       .get("/getTodaysAttendence ")
       .then((res) => setStudents(res.data.students))
       .then((err) => console.log(err));
-  }, []);
+  }, [relood]);
 
   const idsFormater = (ids)=>{
     let arr = []
@@ -35,35 +46,43 @@ export default function StudDay() {
     }
     return arr
   } 
-  const atttendHandeler = () => {
-    axiosPublic
+
+  /////////////
+  const handleValueChange = (val) => {
+    console.log("handleValueChange",val)
+    };
+  /////////////
+  const atttendHandeler = async () => {
+    await axiosPublic
       .post("/atttendStudent", {
         studentsIds:idsFormater(ids) ,
       })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
+    Setrelood(!relood)
+
+  };
+
+  const handleCellEditStop = (params) => {
+    if (true) {
+    console.log(params)
+    }
   };
   return (
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid
+      onValueChange={handleValueChange}
         rows={students}
-        mode = "dark"
         columns={columns}
+        experimentalFeatures={{ newEditingApi: true }}
         pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        onCellEditStop={handleCellEditStop}
         onSelectionModelChange={(e) => {
          setIds(e)
         }}
-        isRowSelectable={(params) => {
-        //  let x =  axiosPublic.
-        //  post("/atttendStudent",{studentsIds:[{id:params.row.id}]})
-        //  .then((res)=>  true)
-        //  .then(err=>  false)
-        return  true
-         
-          
-        }}
+        isRowSelectable={(params) => {return  true}}
       />
     
       <Button onClick={()=>atttendHandeler()}> take atttend </Button>
