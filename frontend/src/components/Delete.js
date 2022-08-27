@@ -20,14 +20,14 @@ export default function Delete() {
       });
   };
   return (
-    <Box sx={{ minWidth: 275, maxWidth: 575 }}>
+    <Box sx={{  maxWidth: 575 }}>
       <Card>
         <React.Fragment>
           <CardContent>
             <Box
               component="form"
               sx={{
-                "& .MuiTextField-root": { m: 2.5, width: "40ch" },
+                "& .MuiTextField-root": { m: 2,  },
               }}
               noValidate
               autoComplete="off"
@@ -35,6 +35,8 @@ export default function Delete() {
               <div>
                 {console.log(id)}
                 <TextField
+                sx={{ width: 2/3 }}
+                
                   required
                   id="outlined-required"
                   label="id"

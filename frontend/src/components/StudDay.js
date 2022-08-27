@@ -4,11 +4,9 @@ import { DataGrid, GridEditSingleSelectCell,
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import  AtendedStud from  "./AtendedStu"
 
 
-
-
-<> </>
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -72,6 +70,14 @@ export default function StudDay() {
   return (
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid
+      sx={{
+        boxShadow: 2,
+        border: 2,
+        borderColor: 'primary.light',
+        '& .MuiDataGrid-cell:hover': {
+          color: 'primary.main',
+        },
+      }}
       onValueChange={handleValueChange}
         rows={students}
         columns={columns}
@@ -87,6 +93,8 @@ export default function StudDay() {
       />
     
       <Button onClick={()=>atttendHandeler()}> take atttend </Button>
+
+      <AtendedStud/>
     </div>
   );
 }
