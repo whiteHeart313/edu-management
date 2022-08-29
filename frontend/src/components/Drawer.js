@@ -12,10 +12,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
@@ -28,6 +24,9 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Delete from "./Delete";
 import ChangeGroup from "./ChangeGruope";
+import ListComp from "./listComp";
+import AccordionListItem from "./accordionListItem";
+
 
 const icons = [
   <AssignmentTurnedInIcon />,
@@ -107,6 +106,7 @@ export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -151,36 +151,59 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {["غياب", "اضافه طالب", "حذف طالب", "الامتحانات"].map(
-            (text, index) => (
-              <ListItem
-                onClick={() => navigate(`${pages[index]}`)}
-                key={text}
-                disablePadding
-                sx={{ display: "block" }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {icons[index]}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            )
+            (text, index) => {
+              if (text !== "غياب") {
+                return (
+                  <ListComp text={text} icon={icons[index]}
+                   open={open} page={pages[index]} />
+                );
+              } else {
+                return (
+                  <AccordionListItem icons={icons} open={open} />
+
+                );
+              }
+            }
           )}
         </List>
         <Divider />
+        {/* <ListItem
+          onClick={() => navigate(`${pages[0]}`)}
+          key={"text"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
+          <Accordion
+            expanded={expanded === "panel2"}
+            onChange={handleChange("panel2")}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+               <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {icons[0]}
+                </ListItemIcon>
+                <ListItemText
+                        primary={"text"}
+                        sx={{ opacity: open ? 1 : 0 }}
+                      />
+            </AccordionSummary>
+            <AccordionDetails>
+          <Typography>
+            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
+            Aliquam eget maximus est, id dignissim quam.
+          </Typography>
+        </AccordionDetails>
+          </Accordion>
+        </ListItem> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
@@ -189,7 +212,7 @@ export default function MiniDrawer() {
           <Route path="/add" element={<AddStue />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/delete" element={<Delete />} />
-          <Route path="/Change" element={<ChangeGroup/>} />
+          <Route path="/Change" element={<ChangeGroup />} />
         </Routes>
       </Box>
     </Box>

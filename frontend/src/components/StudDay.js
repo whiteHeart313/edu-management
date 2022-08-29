@@ -1,100 +1,121 @@
 import * as React from "react";
-import { DataGrid, GridEditSingleSelectCell,
-  GridCellEditStopReasons } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridEditSingleSelectCell,
+  GridCellEditStopReasons,
+} from "@mui/x-data-grid";
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import  AtendedStud from  "./AtendedStu"
-
-
+import AtendedStud from "./AtendedStu";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "الإسم", width: 130 },
+  
+  { field: "name", headerName: "الإسم", width: 150 },
   { field: "grade", headerName: "السنه", width: 130 },
   { field: "group_", headerName: "المجموعه", width: 130 },
   { field: "phone", headerName: "رقم الهاتف", type: "number", width: 150 },
   { field: "type", headerName: "المدرسه", width: 160 },
-  { field: "mony1", headerName: "test mony input 1", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), bgcolor:"'#376331'"},
-  { field: "mony2", headerName: "test mony input 2", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), stopCellEditMode:true,bgcolor:"'#376331'"},
-
-
+  {
+    field: "mony1",
+    headerName: "test mony input 1",
+    width: 100,
+    editable: true,
+    preProcessEditCellProps: (props) => console.log("in cell", props),
+    bgcolor: "'#376331'",
+  },
+  {
+    field: "mony2",
+    headerName: "test mony input 2",
+    width: 100,
+    editable: true,
+    preProcessEditCellProps: (props) => console.log(props),
+    stopCellEditMode: true,
+    bgcolor: "'#376331'",
+  },
 ];
 
-
-
 export default function StudDay() {
-  const [ids,setIds] = React.useState([])
+  const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
-  const [relood,Setrelood] = React.useState(true)
-  const [val,setVal] = React.useState("")
+  const [relood, Setrelood] = React.useState(true);
+  const [val, setVal] = React.useState("");
 
   React.useEffect(() => {
     axiosPublic
-      .get("/getTodaysAttendence ")
-      .then((res) => setStudents(res.data.students))
+      .get("/getStudents ")
+      .then((res) => {
+        console.log(res.data.students);
+        return setStudents(res.data.students);
+      })
       .then((err) => console.log(err));
   }, [relood]);
 
-  const idsFormater = (ids)=>{
-    let arr = []
-    for (let i =0 ;i<ids.length; i++) {
-      console.log({id:ids[i]})
+  const idsFormater = (ids) => {
+    let arr = [];
+    for (let i = 0; i < ids.length; i++) {
+      console.log({ id: ids[i] });
 
-     arr.push({id:ids[i]})
+      arr.push({ id: ids[i] });
     }
-    return arr
-  } 
+    return arr;
+  };
 
   /////////////
-  const handleValueChange = (val) => {
-    console.log("handleValueChange",val)
-    };
+  const studintformater = (array) => {
+    return array.map((elem) => {
+      elem.mony1 = "00";
+      elem.mony2 = "00";
+      return elem;
+    });
+  };
   /////////////
   const atttendHandeler = async () => {
     await axiosPublic
       .post("/atttendStudent", {
-        studentsIds:idsFormater(ids) ,
+        studentsIds: idsFormater(ids),
       })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
-    Setrelood(!relood)
-
+    Setrelood(!relood);
   };
 
   const handleCellEditStop = (params) => {
     if (true) {
-    console.log(params)
+      console.log(params);
     }
   };
   return (
     <div style={{ height: 500, width: "100%" }}>
+      {console.log()}
       <DataGrid
-      sx={{
-        boxShadow: 2,
-        border: 2,
-        borderColor: 'primary.light',
-        '& .MuiDataGrid-cell:hover': {
-          color: 'primary.main',
-        },
-      }}
-      onValueChange={handleValueChange}
-        rows={students}
+        sx={{
+          boxShadow: 2,
+          border: 2,
+          borderColor: "primary.light",
+          "& .MuiDataGrid-cell:hover": {
+            color: "primary.main",
+          },
+        }}
+        onValueChange={(params) => console.log("on", params)}
+        rows={studintformater(students)}
         columns={columns}
         experimentalFeatures={{ newEditingApi: true }}
         pageSize={10}
-        rowsPerPageOptions={[5]}
+        rowsPerPageOptions={[10]}
         checkboxSelection
         onCellEditStop={handleCellEditStop}
         onSelectionModelChange={(e) => {
-         setIds(e)
+          setIds(e);
         }}
-        isRowSelectable={(params) => {return  true}}
+        isRowSelectable={(params) => {
+          return true;
+        }}
       />
-    
-      <Button onClick={()=>atttendHandeler()}> take atttend </Button>
 
-      <AtendedStud/>
+      <Button onClick={() => atttendHandeler()}> take atttend </Button>
+
+      <AtendedStud />
     </div>
   );
 }
