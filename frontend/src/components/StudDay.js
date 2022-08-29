@@ -43,7 +43,7 @@ export default function StudDay() {
 
   React.useEffect(() => {
     axiosPublic
-      .get("/getStudents ")
+      .get("/getTodaysAttendence")
       .then((res) => {
         console.log(res.data.students);
         return setStudents(res.data.students);
@@ -97,11 +97,12 @@ export default function StudDay() {
             color: "primary.main",
           },
         }}
+        rowHeight={25}
         onValueChange={(params) => console.log("on", params)}
         rows={studintformater(students)}
         columns={columns}
         experimentalFeatures={{ newEditingApi: true }}
-        pageSize={10}
+        pageSize={15}
         rowsPerPageOptions={[10]}
         checkboxSelection
         onCellEditStop={handleCellEditStop}
@@ -113,7 +114,8 @@ export default function StudDay() {
         }}
       />
 
-      <Button onClick={() => atttendHandeler()}> take atttend </Button>
+      <Button variant="contained" sx={{margin : 2, fontSize:20}} 
+      onClick={() => atttendHandeler()}> take atttend </Button>
 
       <AtendedStud />
     </div>

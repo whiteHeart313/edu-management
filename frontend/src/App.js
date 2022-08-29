@@ -18,7 +18,7 @@ function App() {
   // createUsers(names,20)
 // console.log(testEndPoints(postArr, "post",postReq))
 // console.log(">>>>>>>>>>>>get test ",testEndPoints(getArr,"get"))
-// deleteStudents()\
+// deleteStudents()
 //theme={darkTheme}
   return (
     // <ThemeProvider >
