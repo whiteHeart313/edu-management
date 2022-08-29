@@ -25,8 +25,8 @@ export default function AccordionListItem(props) {
     >
       <ListItemText>
         <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
+          expanded={expanded === "expanded"}
+          onChange={handleChange("expanded")}
         >
           <AccordionSummary
             expandIcon={
@@ -37,7 +37,7 @@ export default function AccordionListItem(props) {
                   justifyContent: "center",
                 }}
               >
-                {props.icons[1]}
+                {props.icons[0]}
               </ListItemIcon>
             }
             aria-controls="panel1bh-content"
@@ -46,8 +46,8 @@ export default function AccordionListItem(props) {
             <ListItemText primary={"الغياب"} sx={{ opacity:props.open ? 1 : 0 }} />
           </AccordionSummary>
           <AccordionDetails>
-            {["مجموعه السبت", "مجموعه الاحد", "جموعه الاثنين"].map((text) => (
-              <ListComp text={text} icon={props.open[0]} open={props.open} page={"/"} />
+            {["مجموعه السبت", "مجموعه الاحد", "جموعه الاثنين"].map((text,index) => (
+              <ListComp text={text} icon={props.icons[0]} open={props.open} page={"/"} />
             ))}
           </AccordionDetails>
         </Accordion>

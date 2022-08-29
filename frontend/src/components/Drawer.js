@@ -105,8 +105,6 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -133,8 +131,8 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+          <Typography variant="h4" noWrap component="div">
+            الــطــمــلاوي
           </Typography>
         </Toolbar>
       </AppBar>
@@ -167,43 +165,6 @@ export default function MiniDrawer() {
           )}
         </List>
         <Divider />
-        {/* <ListItem
-          onClick={() => navigate(`${pages[0]}`)}
-          key={"text"}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <Accordion
-            expanded={expanded === "panel2"}
-            onChange={handleChange("panel2")}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-            >
-               <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {icons[0]}
-                </ListItemIcon>
-                <ListItemText
-                        primary={"text"}
-                        sx={{ opacity: open ? 1 : 0 }}
-                      />
-            </AccordionSummary>
-            <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
-        </AccordionDetails>
-          </Accordion>
-        </ListItem> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
