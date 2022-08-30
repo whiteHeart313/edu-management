@@ -13,7 +13,7 @@ export default function ListComp(props){
     let navigate = useNavigate()
     return (
         <ListItem
-                    onClick={() => navigate(`${props.page}`)}
+                    onClick={() => navigate(`${props.page}`,{state:{name:props.name}})}
                     key={props.text}
                     disablePadding
                     sx={{ display: "block" }}
