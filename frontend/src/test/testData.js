@@ -3,7 +3,9 @@ export const postArr = ["/atttendStudent",
 '/addStudent', 
 '/deleteStudent',
 '/changeGroup',
-'/createExam']
+'/createExam' , 
+'/getTodaysAttendence'
+]
 
 
 
@@ -36,8 +38,10 @@ export const postReq = [
     "date" : "7/9/2022"
     
 }
+ , 
+ {group : "1 OR 2 OR 3"}
 
 ];
 
 
-export const getArr = ["/getStudents","getTodaysAttendence","getMonthlyMoneyForAllStudents"]
+export const getArr = ["/getStudents","getMonthlyMoneyForAllStudents"]

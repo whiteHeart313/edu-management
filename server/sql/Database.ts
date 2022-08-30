@@ -159,17 +159,39 @@ every request to this endpoint is going to ask to perform this query
 **/
 
 // return students who has not been recorded as attendence yet 
-  async getTodaysAttendence(): Promise<student[] | undefined> {
+  async getTodaysAttendence(group :string ): Promise<student[] | undefined> {
+    const today = await this.getDate();
+    console.log("here in this function .... ")
+
+    return this.db.all(
+      `SELECT  *
+      FROM students 
+      WHERE group_ = ?
+        AND NOT EXISTS (
+       SELECT  * 
+        FROM attendence 
+      WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
+     `,
+      group , 
+      today.day , 
+      today.month , 
+      today.year
+    );
+  }
+
+  async getTodaysAttendence_(): Promise<student[] | undefined> {
     const today = await this.getDate();
 
     return this.db.all(
       `SELECT  *
       FROM students 
-      WHERE NOT EXISTS (
+      WHERE 
+         NOT EXISTS (
        SELECT  * 
         FROM attendence 
       WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
      `,
+    
       today.day , 
       today.month , 
       today.year

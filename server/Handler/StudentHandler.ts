@@ -1,7 +1,7 @@
 import { db } from '../datastore/datastore';
 import { student, typeValidation, studentType, currentDate } from '../types';
 import crypto from 'crypto';
-
+import {studentGroups} from './StudentGroupEnum'
 export const getStudents: typeValidation<{}, { students: student[] }> = async (req, res) => {
   // get students with annotation of this student has attended or not
   return res.status(200).send({ students: await db.getAllStudent() });
@@ -116,11 +116,18 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
   return res.status(200).send({ message: `student has been attended successfully ` });
 };
 
-export const getTodaysAttendence: typeValidation<{}, { students: student[] }> = async (
+export const getTodaysAttendence: typeValidation<{group : string }, { students: student[] }> = async (
   req,
   res
 ) => {
-  return res.status(200).send({ students: await db.getTodaysAttendence() });
+  let group = '' 
+  if(req.body.group) {
+    group = studentGroups.get(req.body.group)!
+    return res.status(200).send({ students: await db.getTodaysAttendence(group) });
+
+  }
+  return res.status(200).send({ students: await db.getTodaysAttendence_() });
+  
 };
 
 export const getMonthAttendence: typeValidation<{date : currentDate}, { students: student[] }> = async (req, res) => {

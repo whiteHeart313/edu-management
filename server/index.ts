@@ -22,7 +22,7 @@ import { getMonthlyMoney } from './Handler/MoneyHandler';
   });
 
   app.get('/v1/getStudents', asyncHandler(getStudents));
-  app.get('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
+  app.post('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
   app.get('/v1/getMonthlyMoneyForAllStudents' , asyncHandler(getMonthlyMoney)) ; 
 
 
