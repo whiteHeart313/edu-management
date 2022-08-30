@@ -4,7 +4,7 @@ import { initDB } from './datastore/datastore';
 import { getStudents, addStudents, deleteStudent, changeGroup , attendStudent , getTodaysAttendence} from './Handler/StudentHandler';
 import {createExam , getExamByMonth } from './Handler/ExamsHandler' ; 
 import { errHandler } from './Middleware/errorMidlware';
-import { getMonthlyMoney } from './Handler/MoneyHandler';
+import { getMonthlyMoney , putStudentMoney } from './Handler/MoneyHandler';
 (async () => {
   await initDB();
   const cors = require('cors')
@@ -22,10 +22,10 @@ import { getMonthlyMoney } from './Handler/MoneyHandler';
   });
 
   app.get('/v1/getStudents', asyncHandler(getStudents));
-  app.post('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
   app.get('/v1/getMonthlyMoneyForAllStudents' , asyncHandler(getMonthlyMoney)) ; 
 
-
+  app.post('/v1/putStudentMoney' , asyncHandler(putStudentMoney))
+  app.post('/v1/getTodaysAttendence', asyncHandler(getTodaysAttendence));
   app.post('/v1/atttendStudent' , asyncHandler(attendStudent))
   app.post('/v1/getExamByMonth' , asyncHandler(getExamByMonth))
   app.post('/v1/addStudent', asyncHandler(addStudents));

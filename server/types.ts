@@ -8,6 +8,7 @@ export interface student {
   grade: string;
   group: String;
   type: string;
+  hour : string 
 }
 
 export interface attendence {
@@ -47,7 +48,12 @@ export type typeValidation<req, res> = RequestHandler<
 >;
 export type studentType = Pick<
   student,
-  'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'
+  'name' | 'phone' | 'parentPhone' | 'grade' | 'group' | 'type'|'hour'
+>;
+
+export type studentMonthlyMoney = Pick<
+MonthlyMoney,
+  'st_id' | 'money' 
 >;
 
 export type exam  = {st_id : string  , examResult : Number  }

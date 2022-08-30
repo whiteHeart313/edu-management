@@ -30,14 +30,15 @@ export class models implements datastore {
   async createStudent(student: student): Promise<void> {
     await this.db
       .run(
-        'INSERT INTO students (id, name, phone, parentPhone, grade, group_ ,type ) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO students (id, name, phone, parentPhone, grade, group_ ,type , hour) VALUES (?,?,?,?,?,?,?,?)',
         student.id,
         student.name,
         student.phone,
         student.parentPhone,
         student.grade,
         student.group,
-        student.type
+        student.type , 
+        student.hour
       )
       .then(e => {
         console.log('added to the DB');
@@ -241,8 +242,18 @@ every request to this endpoint is going to ask to perform this query
   getBooksMoney(): Promise<BooksMoney[] | undefined> {
     throw new Error('Method not implemented.');
   }
-  PutMonthlyMoneyToStudents(monthlyMony: MonthlyMoney): Promise<void> {
-    throw new Error('Method not implemented.');
+  async PutMonthlyMoneyToStudents(monthlyMony: MonthlyMoney): Promise<void> {
+    await this.db
+    .run(
+      'INSERT INTO monthlyMoney (id, st_id , date , money ) VALUES (?,?,?,?)',
+      monthlyMony.id,
+      monthlyMony.st_id,
+      monthlyMony.month,
+      monthlyMony.money
+    )
+    .then(e => {
+      console.log('added to DB in monthly exam ');
+    });
   }
   PutBooksMoneyToStudets(BooksMony: money): Promise<void> {
     throw new Error('Method not implemented.');
