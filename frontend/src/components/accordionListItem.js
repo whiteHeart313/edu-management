@@ -4,9 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import * as React from "react";
-import listComp from "./listComp";
 import ListItem from "@mui/material/ListItem";
 
 export default function AccordionListItem(props) {

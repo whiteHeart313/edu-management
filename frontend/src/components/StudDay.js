@@ -1,12 +1,7 @@
 import * as React from "react";
-import {
-  DataGrid,
-  GridEditSingleSelectCell,
-  GridCellEditStopReasons,
-} from "@mui/x-data-grid";
+import {DataGrid} from "@mui/x-data-grid";
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import AtendedStud from "./AtendedStu";
 
 const columns = [
@@ -35,7 +30,8 @@ const columns = [
   },
 ];
 
-export default function StudDay() {
+export default function StudDay(props) {
+  
   const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
   const [relood, Setrelood] = React.useState(true);
@@ -97,7 +93,7 @@ export default function StudDay() {
             color: "primary.main",
           },
         }}
-        rowHeight={25}
+       rowHeight={true ? 25 : null } 
         onValueChange={(params) => console.log("on", params)}
         rows={studintformater(students)}
         columns={columns}
