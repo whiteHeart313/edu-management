@@ -39,6 +39,7 @@ export const addStudents: typeValidation<studentType, {}> = async (req, res) => 
     grade: student_.grade!,
     group: student_.group!,
     type: student_.type!,
+    hour : student_.hour!
   };
   await db.createStudent(student);
   return res.status(201).send({ message: 'student has been created successfully ' });
@@ -146,3 +147,8 @@ async function studentHasBeenAttended(id: string) {
   }
   return false;
 }
+
+
+// TODOS : 
+// add to student model : hour besides every student group 
+// add getStudentByGroupAndHour() function in the handler  

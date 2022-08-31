@@ -1,10 +1,15 @@
+
+
+
+
 export const postArr = ["/atttendStudent",
-'/getExamByMonth' ,
-'/addStudent', 
-'/deleteStudent',
-'/changeGroup',
-'/createExam' , 
-'/getTodaysAttendence'
+'/v1/getExamByMonth' ,
+'/v1/addStudent', 
+'/v1/deleteStudent',
+'/v1/changeGroup',
+'/v1/createExam' , 
+'/v1/getTodaysAttendence' , 
+'/v1/putStudentMoney'
 ]
 
 
@@ -23,9 +28,12 @@ export const postReq = [
   },
   {id:"1d42946f-fafa-4c1e-857a-90115cec3064"},
   { id: "007ebbc0-ba27-4c6f-a03a-962f7ab95b73",switchedGroup: "جمعه" },
+
+// this object could be simplified , i don't know why i did it like that ?!!!!!
   {
     "studentsResults": 
     [
+
       {
         "exam" : {
           "st_id": "007ebbc0-ba27-4c6f-a03a-962f7ab95b73",
@@ -39,7 +47,22 @@ export const postReq = [
     
 }
  , 
- {group : "1 OR 2 OR 3"}
+ {group : "1 OR 2 OR 3 OR 4 "}  , 
+
+ {
+  StudentsMonthlyMoney : [
+    {
+      st_id : "14d3dddb-249a-48c0-9069-194362561854" , 
+      money : 300
+    } , 
+
+    {
+      st_id : "14d3dddb-249a-48c0-9069-194362561854" , 
+      money : 300
+    }
+
+    ]
+ }
 
 ];
 
