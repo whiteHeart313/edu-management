@@ -6,14 +6,25 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate,useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import StudDay from "./StudDay";
 
 export default function ListComp(props){
+  const location = useLocation();
+  
     let navigate = useNavigate()
+    const clickHndeler  = ()=>{
+      if (props.group){
+        return null 
+      }else{
+        navigate(`${props.page}`,{state:{group:props.group}})
+      }
+        
+    }
     return (
         <ListItem
-                    onClick={() => navigate(`${props.page}`,{state:{name:props.name}})}
+                    onClick={() =>clickHndeler() }
                     key={props.text}
                     disablePadding
                     sx={{ display: "block" }}

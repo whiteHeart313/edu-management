@@ -6,6 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import * as React from "react";
 import ListItem from "@mui/material/ListItem";
+import { Link } from "react-router-dom";
 
 export default function AccordionListItem(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -44,8 +45,9 @@ export default function AccordionListItem(props) {
             <ListItemText primary={"الغياب"} sx={{ opacity:props.open ? 1 : 0 }} />
           </AccordionSummary>
           <AccordionDetails>
-            {["مجموعه السبت", "مجموعه الاحد", "جموعه الاثنين"].map((text,index) => (
-              <ListComp text={text} icon={props.icons[0]} open={props.open} page={"/"} />
+            {["مجموعه السبت", "مجموعه الاحد", "مجموعه الاثنين","الجمعه "].map((text,index) => (
+               <Link to="/" state={{ group: index+1 }} ><ListComp  text={text} icon={props.icons[0]} group={index+1} open={props.open} page={"/"} /></Link>
+              
             ))}
           </AccordionDetails>
         </Accordion>

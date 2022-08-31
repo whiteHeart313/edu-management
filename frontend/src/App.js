@@ -1,10 +1,10 @@
 import "./App.css";
 
 import SideNav from "../src/components/Drawer";
-// import { testEndPoints } from './test/test';
-// import {postArr,getArr,postReq} from "./test/testData"
-// import {createUsers,names} from "./test/studintcreation"
-// import {deleteStudents} from "./test/deletStu"
+import { testEndPoints } from './test/test';
+import {postArr,getArr,postReq} from "./test/testData"
+import {createUsers,names} from "./test/studintcreation"
+import {deleteStudents} from "./test/deletStu"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 

@@ -3,9 +3,10 @@ import {DataGrid} from "@mui/x-data-grid";
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
 import AtendedStud from "./AtendedStu";
+import { useLocation } from "react-router";
+
 
 const columns = [
-  
   { field: "name", headerName: "الإسم", width: 150 },
   { field: "grade", headerName: "السنه", width: 130 },
   { field: "group_", headerName: "المجموعه", width: 130 },
@@ -30,22 +31,25 @@ const columns = [
   },
 ];
 
+
 export default function StudDay(props) {
-  
+  const location = useLocation();
   const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
   const [relood, Setrelood] = React.useState(true);
   const [val, setVal] = React.useState("");
 
+
+  console.log("loc group", location.state.group)
   React.useEffect(() => {
     axiosPublic
-      .get("/getTodaysAttendence")
+      .post("/getTodaysAttendence",{group: location.state.group.toString()})
       .then((res) => {
         console.log(res.data.students);
         return setStudents(res.data.students);
       })
       .then((err) => console.log(err));
-  }, [relood]);
+  }, [relood,location.state.group]);
 
   const idsFormater = (ids) => {
     let arr = [];
