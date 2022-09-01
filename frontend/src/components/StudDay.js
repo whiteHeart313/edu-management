@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import AtendedStud from "./AtendedStu";
 import { useLocation } from "react-router";
 
-
+const paymint = {}
 const columns = [
   { field: "name", headerName: "الإسم", width: 150 },
   { field: "grade", headerName: "السنه", width: 130 },
@@ -14,20 +14,20 @@ const columns = [
   { field: "type", headerName: "المدرسه", width: 160 },
   {
     field: "mony1",
-    headerName: "test mony input 1",
+    headerName: "فلوس الشهر",
     width: 100,
     editable: true,
-    preProcessEditCellProps: (props) => console.log("in cell", props),
-    bgcolor: "'#376331'",
+    preProcessEditCellProps: (props) =>  {  paymint[props.id] =  props.props.value},
+    bgcolor: "#376331",
   },
   {
     field: "mony2",
     headerName: "test mony input 2",
     width: 100,
     editable: true,
-    preProcessEditCellProps: (props) => console.log(props),
-    stopCellEditMode: true,
-    bgcolor: "'#376331'",
+    preProcessEditCellProps: (props) =>  console.log( "mony2", props, props.id,props.props.value),
+    bgcolor: "#376331",
+    color:"red"
   },
 ];
 
@@ -38,6 +38,8 @@ export default function StudDay(props) {
   const [students, setStudents] = React.useState([]);
   const [relood, Setrelood] = React.useState(true);
   const [val, setVal] = React.useState("");
+  const [monthelyMony,setMonthelyMony] =React.useState([])
+ 
 
 
   console.log("loc group", location.state.group)
@@ -61,15 +63,29 @@ export default function StudDay(props) {
     return arr;
   };
 
-  /////////////
-  const studintformater = (array) => {
-    return array.map((elem) => {
-      elem.mony1 = "00";
-      elem.mony2 = "00";
-      return elem;
+  /////////////paymint//////////////
+  const paymintformater = (opj) => {
+    let arr = []
+    Object.keys(opj).forEach(function(key, index) {
+     arr.push( {
+      st_id : key , 
+      money : opj[key]
+    })
     });
+    return arr
   };
-  /////////////
+
+  const paymintHandeler = async () => {
+    await axiosPublic
+      .post("/putStudentMoney", {
+        StudentsMonthlyMoney: paymintformater(paymint),
+      })
+      .then((res) => console.log(res))
+      .then((err) => console.log(err));
+    Setrelood(!relood);
+  };
+  
+  /////////////////////////////
   const atttendHandeler = async () => {
     await axiosPublic
       .post("/atttendStudent", {
@@ -87,7 +103,7 @@ export default function StudDay(props) {
   };
   return (
     <div style={{ height: 500, width: "100%" }}>
-      {console.log()}
+      
       <DataGrid
         sx={{
           boxShadow: 2,
@@ -99,7 +115,7 @@ export default function StudDay(props) {
         }}
        rowHeight={true ? 25 : null } 
         onValueChange={(params) => console.log("on", params)}
-        rows={studintformater(students)}
+        rows={students}
         columns={columns}
         experimentalFeatures={{ newEditingApi: true }}
         pageSize={15}
@@ -115,8 +131,10 @@ export default function StudDay(props) {
       />
 
       <Button variant="contained" sx={{margin : 2, fontSize:20}} 
-      onClick={() => atttendHandeler()}> take atttend </Button>
+      onClick={() => atttendHandeler()}> تسجيل الغياب  </Button>
 
+   <Button variant="contained" sx={{margin : 2, fontSize:20}} 
+      onClick={() => paymintHandeler()}> اضافة المدفوعات </Button>
       <AtendedStud />
     </div>
   );
