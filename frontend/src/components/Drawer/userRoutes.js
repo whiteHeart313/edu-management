@@ -1,9 +1,9 @@
-import StudDay from "./StudDay";
-import AddStue from "./AddStu";
-import Exam from "./Exam";
+import StudDay from "../StudDay";
+import AddStue from "../AddStu";
+import Exam from "../Exam";
 import { Routes, Route } from "react-router-dom";
-import Delete from "./Delete";
-import ChangeGroup from "./ChangeGruope";
+import Delete from "../Delete";
+import ChangeGroup from "../ChangeGruope";
 
 
 

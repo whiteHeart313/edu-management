@@ -114,14 +114,14 @@ export default function StudDay(props) {
           },
         }}
        rowHeight={true ? 25 : null } 
-        onValueChange={(params) => console.log("on", params)}
+        // onValueChange={(params) => console.log("on", params)}
         rows={students}
         columns={columns}
         experimentalFeatures={{ newEditingApi: true }}
         pageSize={15}
         rowsPerPageOptions={[10]}
         checkboxSelection
-        onCellEditStop={handleCellEditStop}
+        // onCellEditStop={handleCellEditStop}
         onSelectionModelChange={(e) => {
           setIds(e);
         }}

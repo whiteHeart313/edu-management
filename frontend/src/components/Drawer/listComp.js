@@ -1,24 +1,18 @@
-//pages[index]
-//props.text
-//icons[index]
-
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate,useLocation } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
-import StudDay from "./StudDay";
+
 
 export default function ListComp(props){
-  const location = useLocation();
   
     let navigate = useNavigate()
     const clickHndeler  = ()=>{
       if (props.group){
         return null 
       }else{
-        navigate(`${props.page}`,{state:{group:props.group}})
+        navigate(`${props.page}`)
       }
         
     }

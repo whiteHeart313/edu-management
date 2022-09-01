@@ -1,6 +1,6 @@
 import "./App.css";
 
-import SideNav from "../src/components/Drawer";
+import SideNav from "../src/components/Drawer/Drawer";
 import { testEndPoints } from './test/test';
 import {postArr,getArr,postReq} from "./test/testData"
 import {createUsers,names} from "./test/studintcreation"
