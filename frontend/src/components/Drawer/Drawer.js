@@ -16,6 +16,8 @@ import {
   ChevronRight,
   Menu,
 } from "@mui/icons-material";
+import { QrCode } from "@mui/icons-material";
+import {SocialDistance} from '@mui/icons-material';
 import ListComp from "./listComp";
 import AccordionListItem from "./accordionListItem";
 import UserRutes from "./userRoutes";
@@ -26,9 +28,10 @@ const icons = [
   <AssignmentTurnedIn />,
   <PersonAdd />,
   <PersonRemove />,
-  <Ballot />,
+  <SocialDistance />,
+  <QrCode/>
 ];
-const pages = ["", "add", "delete", " "];
+const pages = ["", "add", "delete", "Change","QrCode"];
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,7 +83,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["غياب", "اضافه طالب", "حذف طالب", "الامتحانات"].map(
+          {["غياب", "اضافه طالب", "حذف طالب","تغير المجموعه","QR-Code"].map(
             (text, index) => {
               if (text !== "غياب") {
                 return (

@@ -4,10 +4,7 @@ import Exam from "../Exam";
 import { Routes, Route } from "react-router-dom";
 import Delete from "../Delete";
 import ChangeGroup from "../ChangeGruope";
-
-
-
-
+import QrCode from "../QrCode";
 
 export default function UserRutes(){
 return (
@@ -17,6 +14,7 @@ return (
           <Route path="/exam" element={<Exam />} />
           <Route path="/delete" element={<Delete />} />
           <Route path="/Change" element={<ChangeGroup />} />
+          <Route path="/QrCode" element={<QrCode/>} />
         </Routes>
 )
 

@@ -41,17 +41,17 @@ export default function StudDay(props) {
   const [monthelyMony,setMonthelyMony] =React.useState([])
  
 
-
-  console.log("loc group", location.state.group)
+  const group = location.state ? location.state.group : "";
+ 
   React.useEffect(() => {
     axiosPublic
-      .post("/getTodaysAttendence",{group: location.state.group.toString()})
+      .post("/getTodaysAttendence",{group:group.toString()})
       .then((res) => {
         console.log(res.data.students);
         return setStudents(res.data.students);
       })
       .then((err) => console.log(err));
-  }, [relood,location.state.group]);
+  }, [relood,group]);
 
   const idsFormater = (ids) => {
     let arr = [];

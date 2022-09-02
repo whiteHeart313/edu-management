@@ -58,6 +58,7 @@ export default function OutlinedCard() {
   const [group, setGroup] = React.useState("السبت و الثلاثاء");
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
+  const [time,setTime]= React.useState("")
   const [parentPhone, setParentPhone] = React.useState("");
 
   const handleSubmit = () => {
@@ -78,6 +79,7 @@ export default function OutlinedCard() {
         setName("");
         setGrade("");
         setGroup("");
+        setTime("")
         setType("");
       });
   };
@@ -102,7 +104,7 @@ export default function OutlinedCard() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                {console.log(name)}
+               
                 <TextField
                   required
                   id="outlined-required"
@@ -116,6 +118,13 @@ export default function OutlinedCard() {
                   label="parentPhone"
                   value={parentPhone}
                   onChange={(e) => setParentPhone(e.target.value)}
+                />
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
                 />
                 <TextField
                   id="outlined-select-grade"

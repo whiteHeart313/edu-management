@@ -46,7 +46,7 @@ export default function AccordionListItem(props) {
           </AccordionSummary>
           <AccordionDetails>
             {["مجموعه السبت", "مجموعه الاحد", "مجموعه الاثنين","الجمعه "].map((text,index) => (
-               <Link to="/" state={{ group: index+1 }} ><ListComp  text={text} icon={props.icons[0]} group={index+1} open={props.open} page={"/"} /></Link>
+               <Link style={{ textDecoration: 'none' }}  to="/" state={{ group: index+1 }} ><ListComp  text={text} icon={props.icons[0]} group={index+1} open={props.open} page={"/"} /></Link>
               
             ))}
           </AccordionDetails>
