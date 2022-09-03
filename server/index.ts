@@ -18,7 +18,7 @@ import { getMonthlyMoney , putStudentMoney } from './Handler/MoneyHandler';
   app.use(express.json());
 
   app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello World moamen !');
   });
 
   app.get('/v1/getStudents', asyncHandler(getStudents));

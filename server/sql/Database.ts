@@ -187,7 +187,8 @@ every request to this endpoint is going to ask to perform this query
         AND NOT EXISTS (
        SELECT  * 
         FROM attendence 
-      WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
+        WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
+
      `,
       group,
       today.day,
@@ -275,11 +276,15 @@ every request to this endpoint is going to ask to perform this query
     throw new Error('Method not implemented.');
   }
 
-  getStudentMoneyByMonth(studentId: string, month: string) : Promise<MonthlyMoney | undefined> {
+  getStudentMoneyByMonth(studentId: string, month: string): Promise<MonthlyMoney | undefined> {
     return this.db.get(
       'SELECT * FROM monthlyMoney WHERE st_id = ? AND  date = ? ',
       studentId,
       month
     );
+  }
+
+  getAllMonthlyMoney(): Promise<Number[]> {
+    return this.db.all('SELECT date,SUM(money) FROM monthlyMoney group by  date');
   }
 }

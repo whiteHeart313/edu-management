@@ -9,5 +9,5 @@ export interface MoneyDao {
     PutMonthlyMoneyToStudents(monthlyMony : MonthlyMoney): Promise<void>
     PutBooksMoneyToStudets(BooksMony : money): Promise<void>
     getStudentMoneyByMonth(studentId : string , month : string): Promise<MonthlyMoney | undefined>
-    
+    getAllMonthlyMoney(): Promise<Number[] >
 } 

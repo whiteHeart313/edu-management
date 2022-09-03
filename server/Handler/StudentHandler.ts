@@ -99,6 +99,8 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
          return res.status(400).json
       */
 
+        console.log("hello world ")
+
       numberOfInvalidStudents++;
       continue;
     }
@@ -117,6 +119,10 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
   return res.status(200).send({ message: `student has been attended successfully ` });
 };
 
+
+
+// here i want to add some more data in the response object : 
+// like if he has paid this month or not and if he has a notes on him or not 
 export const getTodaysAttendence: typeValidation<{group : string }, { students: student[] }> = async (
   req,
   res
@@ -130,6 +136,10 @@ export const getTodaysAttendence: typeValidation<{group : string }, { students: 
   return res.status(200).send({ students: await db.getTodaysAttendence_() });
   
 };
+
+
+
+
 
 export const getMonthAttendence: typeValidation<{date : currentDate}, { students: student[] }> = async (req, res) => {
   if(!req.body.date) return res.status(400).send({message : "i need to specidy the date you want , please provide a date as an object "})
