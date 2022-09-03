@@ -8,4 +8,6 @@ export interface MoneyDao {
     getBooksMoney(): Promise<BooksMoney[] | undefined >
     PutMonthlyMoneyToStudents(monthlyMony : MonthlyMoney): Promise<void>
     PutBooksMoneyToStudets(BooksMony : money): Promise<void>
+    getStudentMoneyByMonth(studentId : string , month : string): Promise<MonthlyMoney | undefined>
+    
 } 

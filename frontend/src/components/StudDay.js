@@ -1,100 +1,141 @@
 import * as React from "react";
-import { DataGrid, GridEditSingleSelectCell,
-  GridCellEditStopReasons } from "@mui/x-data-grid";
+import {DataGrid} from "@mui/x-data-grid";
 import { axiosPublic } from "../api/axiosPublic";
 import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import  AtendedStud from  "./AtendedStu"
+import AtendedStud from "./AtendedStu";
+import { useLocation } from "react-router";
 
-
-
+const paymint = {}
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "الإسم", width: 130 },
+  { field: "name", headerName: "الإسم", width: 150 },
   { field: "grade", headerName: "السنه", width: 130 },
   { field: "group_", headerName: "المجموعه", width: 130 },
   { field: "phone", headerName: "رقم الهاتف", type: "number", width: 150 },
   { field: "type", headerName: "المدرسه", width: 160 },
-  { field: "mony1", headerName: "test mony input 1", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), bgcolor:"'#376331'"},
-  { field: "mony2", headerName: "test mony input 2", width: 100 , editable: true,preProcessEditCellProps:(props)=>console.log(props), stopCellEditMode:true,bgcolor:"'#376331'"},
-
-
+  {
+    field: "mony1",
+    headerName: "فلوس الشهر",
+    width: 100,
+    editable: true,
+    preProcessEditCellProps: (props) =>  {  paymint[props.id] =  props.props.value},
+    bgcolor: "#376331",
+  },
+  {
+    field: "mony2",
+    headerName: "test mony input 2",
+    width: 100,
+    editable: true,
+    preProcessEditCellProps: (props) =>  console.log( "mony2", props, props.id,props.props.value),
+    bgcolor: "#376331",
+    color:"red"
+  },
 ];
 
 
-
-export default function StudDay() {
-  const [ids,setIds] = React.useState([])
+export default function StudDay(props) {
+  const location = useLocation();
+  const [ids, setIds] = React.useState([]);
   const [students, setStudents] = React.useState([]);
-  const [relood,Setrelood] = React.useState(true)
-  const [val,setVal] = React.useState("")
+  const [relood, Setrelood] = React.useState(true);
+  const [val, setVal] = React.useState("");
+  const [monthelyMony,setMonthelyMony] =React.useState([])
+ 
 
+  const group = location.state ? location.state.group : "";
+ 
   React.useEffect(() => {
     axiosPublic
-      .get("/getTodaysAttendence ")
-      .then((res) => setStudents(res.data.students))
+      .post("/getTodaysAttendence",{group:group.toString()})
+      .then((res) => {
+        console.log(res.data.students);
+        return setStudents(res.data.students);
+      })
       .then((err) => console.log(err));
-  }, [relood]);
+  }, [relood,group]);
 
-  const idsFormater = (ids)=>{
-    let arr = []
-    for (let i =0 ;i<ids.length; i++) {
-      console.log({id:ids[i]})
+  const idsFormater = (ids) => {
+    let arr = [];
+    for (let i = 0; i < ids.length; i++) {
+      console.log({ id: ids[i] });
 
-     arr.push({id:ids[i]})
+      arr.push({ id: ids[i] });
     }
-    return arr
-  } 
+    return arr;
+  };
 
-  /////////////
-  const handleValueChange = (val) => {
-    console.log("handleValueChange",val)
-    };
-  /////////////
-  const atttendHandeler = async () => {
+  /////////////paymint//////////////
+  const paymintformater = (opj) => {
+    let arr = []
+    Object.keys(opj).forEach(function(key, index) {
+     arr.push( {
+      st_id : key , 
+      money : opj[key]
+    })
+    });
+    return arr
+  };
+
+  const paymintHandeler = async () => {
     await axiosPublic
-      .post("/atttendStudent", {
-        studentsIds:idsFormater(ids) ,
+      .post("/putStudentMoney", {
+        StudentsMonthlyMoney: paymintformater(paymint),
       })
       .then((res) => console.log(res))
       .then((err) => console.log(err));
-    Setrelood(!relood)
-
+    Setrelood(!relood);
+  };
+  
+  /////////////////////////////
+  const atttendHandeler = async () => {
+    await axiosPublic
+      .post("/atttendStudent", {
+        studentsIds: idsFormater(ids),
+      })
+      .then((res) => console.log(res))
+      .then((err) => console.log(err));
+    Setrelood(!relood);
   };
 
   const handleCellEditStop = (params) => {
     if (true) {
-    console.log(params)
+      console.log(params);
     }
   };
   return (
     <div style={{ height: 500, width: "100%" }}>
+      
       <DataGrid
-      sx={{
-        boxShadow: 2,
-        border: 2,
-        borderColor: 'primary.light',
-        '& .MuiDataGrid-cell:hover': {
-          color: 'primary.main',
-        },
-      }}
-      onValueChange={handleValueChange}
+        sx={{
+          boxShadow: 2,
+          border: 2,
+          borderColor: "primary.light",
+          "& .MuiDataGrid-cell:hover": {
+            color: "primary.main",
+          },
+        }}
+       rowHeight={true ? 25 : null } 
+        // onValueChange={(params) => console.log("on", params)}
         rows={students}
         columns={columns}
         experimentalFeatures={{ newEditingApi: true }}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
+        pageSize={15}
+        rowsPerPageOptions={[10]}
         checkboxSelection
-        onCellEditStop={handleCellEditStop}
+        // onCellEditStop={handleCellEditStop}
         onSelectionModelChange={(e) => {
-         setIds(e)
+          setIds(e);
         }}
-        isRowSelectable={(params) => {return  true}}
+        isRowSelectable={(params) => {
+          return true;
+        }}
       />
-    
-      <Button onClick={()=>atttendHandeler()}> take atttend </Button>
 
-      <AtendedStud/>
+      <Button variant="contained" sx={{margin : 2, fontSize:20}} 
+      onClick={() => atttendHandeler()}> تسجيل الغياب  </Button>
+
+   <Button variant="contained" sx={{margin : 2, fontSize:20}} 
+      onClick={() => paymintHandeler()}> اضافة المدفوعات </Button>
+      <AtendedStud />
     </div>
   );
 }

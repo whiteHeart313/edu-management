@@ -8,6 +8,7 @@ export interface StudentDao {
   getStudentbyPhone(phone: string): Promise<student | undefined>;
   changeGroup(id: string, switchedGroup: string): Promise<void>;
   attendStudent(randomId : string ,studentId: string): Promise<void> 
+  // this is going to be a join between table students and attendence .... 
   getStudentAttendenceToday(studentId : string ): Promise<attendence | undefined> 
   getMonthlyAttendence(date : currentDate ): Promise<student[] | undefined >
 }

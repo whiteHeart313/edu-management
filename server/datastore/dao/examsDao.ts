@@ -12,6 +12,7 @@ export interface examsDao {
     getAllMonthlyExams(): Promise<Exam[]> ; 
     getStudentDailyExams(): Promise<Exam[]> ; 
     getStudentMonthlyExams(): Promise<Exam[]> ; 
-    getTodaysAttendence():Promise<student[] | undefined> ; 
+    getTodaysAttendence(group :string ):Promise<student[] | undefined> ; 
+    getTodaysAttendence_(): Promise<student[] | undefined> ; 
 
 }

@@ -1,6 +1,15 @@
 import { datastore } from '../datastore/datastore';
 
-import { student, attendence, Exam, BooksMoney, money, MonthlyMoney, monthlyMoneyWithStudetData , currentDate} from '../types';
+import {
+  student,
+  attendence,
+  Exam,
+  BooksMoney,
+  money,
+  MonthlyMoney,
+  monthlyMoneyWithStudetData,
+  currentDate,
+} from '../types';
 import { Database, open as sqliteOpen } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import path from 'path';
@@ -30,14 +39,15 @@ export class models implements datastore {
   async createStudent(student: student): Promise<void> {
     await this.db
       .run(
-        'INSERT INTO students (id, name, phone, parentPhone, grade, group_ ,type ) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO students (id, name, phone, parentPhone, grade, group_ ,type , hour) VALUES (?,?,?,?,?,?,?,?)',
         student.id,
         student.name,
         student.phone,
         student.parentPhone,
         student.grade,
         student.group,
-        student.type
+        student.type,
+        student.hour
       )
       .then(e => {
         console.log('added to the DB');
@@ -59,10 +69,17 @@ export class models implements datastore {
   }
 
   async attendStudent(randomId: string, studentId: string): Promise<void> {
-    const today : currentDate = await this.getDate();
+    const today: currentDate = await this.getDate();
 
     await this.db
-      .run('INSERT INTO attendence (id, st_id , day , month , year) VALUES (?,?,?,?,?)', randomId, studentId,today.day , today.month , today.year )
+      .run(
+        'INSERT INTO attendence (id, st_id , day , month , year) VALUES (?,?,?,?,?)',
+        randomId,
+        studentId,
+        today.day,
+        today.month,
+        today.year
+      )
       .then(e => {
         console.log('added to DB');
       });
@@ -72,9 +89,9 @@ export class models implements datastore {
     const today = await this.getDate();
     return this.db.get<attendence>(
       `SELECT * FROM attendence WHERE st_id = ? AND day = ?  AND month = ? AND year = ?`,
-      studentId,
-      today.day , 
-      today.month , 
+      studentId,// دي مجاميع
+      today.day,
+      today.month,
       today.year
     );
   }
@@ -87,12 +104,12 @@ export class models implements datastore {
     let month = (date_ob.getMonth() + 1).toString();
     let year = date_ob.getFullYear().toString();
     console.log(year + '-' + month + '-' + day);
-    const currentDate : currentDate = {
-      day : day , 
-      month : month , 
-      year : year
-    }
-    return currentDate ; 
+    const currentDate: currentDate = {
+      day: day,
+      month: month,
+      year: year,
+    };
+    return currentDate;
   }
 
   // Exams Queries
@@ -158,26 +175,48 @@ every request to this endpoint is going to ask to perform this query
   as DELETE function is a way faster that this complex query ....... 
 **/
 
-// return students who has not been recorded as attendence yet 
-  async getTodaysAttendence(): Promise<student[] | undefined> {
+  // return students who has not been recorded as attendence yet
+  async getTodaysAttendence(group: string): Promise<student[] | undefined> {
+    const today = await this.getDate();
+    console.log('here in this function .... ');
+
+    return this.db.all(
+      `SELECT  *
+      FROM students 
+      WHERE group_ = ?
+        AND NOT EXISTS (
+       SELECT  * 
+        FROM attendence 
+      WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
+     `,
+      group,
+      today.day,
+      today.month,
+      today.year
+    );
+  }
+
+  async getTodaysAttendence_(): Promise<student[] | undefined> {
     const today = await this.getDate();
 
     return this.db.all(
       `SELECT  *
       FROM students 
-      WHERE NOT EXISTS (
+      WHERE 
+         NOT EXISTS (
        SELECT  * 
         FROM attendence 
       WHERE attendence.st_id = students.id AND attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?)
      `,
-      today.day , 
-      today.month , 
+
+      today.day,
+      today.month,
       today.year
     );
   }
 
-  // return all studets who has attended this month 
-  async getMonthlyAttendence(date : currentDate ): Promise<student[] | undefined> {
+  // return all studets who has attended this month
+  async getMonthlyAttendence(date: currentDate): Promise<student[] | undefined> {
     //const today = await this.getDate();
 
     return this.db.all(
@@ -188,16 +227,16 @@ every request to this endpoint is going to ask to perform this query
         FROM attendence 
       WHERE attendence.st_id = students.id AND attendence.month = ? AND attendence.year = ?)
      `,
-     date.month,
-     date.year 
+      date.month,
+      date.year
     );
   }
 
   // money queries
 
-  async getMonthlyMoney(): Promise<monthlyMoneyWithStudetData[] > {
-    const currentMonth = await this.getDate()
-    const month : string = currentMonth.month + '-' + currentMonth.year
+  async getMonthlyMoney(): Promise<monthlyMoneyWithStudetData[]> {
+    const currentMonth = await this.getDate();
+    const month: string = currentMonth.month + '-' + currentMonth.year;
     return this.db.all(
       `SELECT  
           monthlyMoney.date , 
@@ -212,17 +251,35 @@ every request to this endpoint is going to ask to perform this query
       INNER JOIN students 
       ON monthlyMoney.st_id = students.id
       WHERE monthlyMoney.date  = ?
-     ` , 
-     month
+     `,
+      month
     );
   }
   getBooksMoney(): Promise<BooksMoney[] | undefined> {
     throw new Error('Method not implemented.');
   }
-  PutMonthlyMoneyToStudents(monthlyMony: MonthlyMoney): Promise<void> {
-    throw new Error('Method not implemented.');
+  async PutMonthlyMoneyToStudents(monthlyMony: MonthlyMoney): Promise<void> {
+    await this.db
+      .run(
+        'INSERT INTO monthlyMoney (id, st_id , date , money ) VALUES (?,?,?,?)',
+        monthlyMony.id,
+        monthlyMony.st_id,
+        monthlyMony.month,
+        monthlyMony.money
+      )
+      .then(e => {
+        console.log('added to DB in MoneyToStudents ');
+      });
   }
   PutBooksMoneyToStudets(BooksMony: money): Promise<void> {
     throw new Error('Method not implemented.');
+  }
+
+  getStudentMoneyByMonth(studentId: string, month: string) : Promise<MonthlyMoney | undefined> {
+    return this.db.get(
+      'SELECT * FROM monthlyMoney WHERE st_id = ? AND  date = ? ',
+      studentId,
+      month
+    );
   }
 }

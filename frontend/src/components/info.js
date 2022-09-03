@@ -16,7 +16,7 @@ const columns = [
 
 
 
-export default function AtendedStud() {
+export default function Info() {
  
   const [students, setStudents] = React.useState([]);
   const [relood,Setrelood] = React.useState(true)
@@ -35,7 +35,6 @@ export default function AtendedStud() {
     <div style={{ height: 500, width: "100%" }}>
       <DataGrid
       sx={{
-        marginTop : 20,
         boxShadow: 2,
         border: 2,
         // backgroundColor:'primary.light',
