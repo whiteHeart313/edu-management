@@ -3,13 +3,13 @@
 
 
 export const postArr = ["/atttendStudent",
-'/v1/getExamByMonth' ,
-'/v1/addStudent', 
-'/v1/deleteStudent',
-'/v1/changeGroup',
-'/v1/createExam' , 
-'/v1/getTodaysAttendence' , 
-'/v1/putStudentMoney'
+'/getExamByMonth' ,
+'/addStudent', 
+'/deleteStudent',
+'/changeGroup',
+'/createExam' , 
+'/getTodaysAttendence' , 
+'/putStudentMoney'
 ]
 
 
@@ -47,12 +47,15 @@ export const postReq = [
     
 }
  , 
- {group : "1 OR 2 OR 3 OR 4 "}  , 
+ {group : "1"}  , 
+
+
+
 
  {
   StudentsMonthlyMoney : [
     {
-      st_id : "14d3dddb-249a-48c0-9069-194362561854" , 
+      st_id : "43526e39-059a-4e24-80cd-c450e711561f" , 
       money : 300
     } , 
 

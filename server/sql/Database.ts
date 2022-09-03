@@ -89,7 +89,7 @@ export class models implements datastore {
     const today = await this.getDate();
     return this.db.get<attendence>(
       `SELECT * FROM attendence WHERE st_id = ? AND day = ?  AND month = ? AND year = ?`,
-      studentId,
+      studentId,// دي مجاميع
       today.day,
       today.month,
       today.year
