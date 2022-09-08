@@ -11,4 +11,5 @@ export interface StudentDao {
   // this is going to be a join between table students and attendence .... 
   getStudentAttendenceToday(studentId : string ): Promise<attendence | undefined> 
   getMonthlyAttendence(date : currentDate ): Promise<student[] | undefined >
+  getWhoHasAttendedToday(group:string): Promise<student[] | undefined >
 }

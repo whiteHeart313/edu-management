@@ -197,6 +197,26 @@ every request to this endpoint is going to ask to perform this query
     );
   }
 
+  async getWhoHasAttendedToday(group:string): Promise<student[] | undefined> {
+    const today = await this.getDate();
+    console.log('here in this function .... ');
+
+    return this.db.all(
+      ` 
+      SELECT  attendence.* , students.*
+      FROM attendence  
+      INNER JOIN students 
+      ON attendence.st_id = students.id AND group_ =?
+      WHERE attendence.day  = ? AND attendence.month  = ? AND attendence.year  = ?
+     `,
+     group , 
+      today.day,
+      today.month,
+      today.year
+    );
+  }
+  
+
   async getTodaysAttendence_(): Promise<student[] | undefined> {
     const today = await this.getDate();
 

@@ -123,14 +123,14 @@ export const attendStudent: typeValidation<{ studentsIds: { id: string }[] }, {}
 
 // here i want to add some more data in the response object : 
 // like if he has paid this month or not and if he has a notes on him or not 
-export const getTodaysAttendence: typeValidation<{group : string }, { students: student[] }> = async (
+export const getTodaysAttendence: typeValidation<{group : string }, { students: student[] , studentsWhoHasBeenAttended: student[] }> = async (
   req,
   res
 ) => {
   let group = '' 
   if(req.body.group) {
     group = studentGroups.get(req.body.group)!
-    return res.status(200).send({ students: await db.getTodaysAttendence(group) });
+    return res.status(200).send({ students: await db.getTodaysAttendence(group) , studentsWhoHasBeenAttended: await db.getWhoHasAttendedToday(group) });
 
   }
   return res.status(200).send({ students: await db.getTodaysAttendence_() });
